@@ -29,7 +29,7 @@ public class Sensor {
 		super();
 		this.zona = new Arc2D.Double();
 		this.zona.extent = 45;
-		this.zona.height = this.zona.width = 1;
+		this.zona.height = this.zona.width = 30;
 		setPosicion(posicion);
 		double restaAngulo =  (BigDecimal.valueOf(this.zona.extent/2).setScale(2,RoundingMode.HALF_EVEN)).doubleValue();
 		switch(direccionInicial)
