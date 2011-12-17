@@ -1,6 +1,7 @@
 package utils;
 
 import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 /**
@@ -50,8 +51,33 @@ public class MathAux {
 			angulo = Math.PI+angulo;
 		}
 		return Math.toDegrees(angulo);
-		
-		
 	}
+    
+    /**
+     * @param direccion Linea en la que avanzara
+     * @param step Cuanto avanzará
+     * @return
+     */
+    public static Point2D.Double avanzarEnLineaRecta(Line2D.Double direccion, Point2D.Double pos, int step)
+    {
+    	double x1 = direccion.x1;
+    	double x2 = direccion.x2;
+    	double y1 = direccion.y1;
+    	double y2 = direccion.y2;
+    	double x = 0;
+    	double y = 0;
+    	if((x2-x1)==0)
+		{
+    		y = pos.y-step;
+    		x = pos.x;
+		}
+    	else
+		{
+    		y = ((y2-y1)/(x2-x1))*(x-x1)+y1;
+    		x = pos.x+step;
+		}
+    	
+    	return new Point2D.Double(x,y);
+    }
 
 }

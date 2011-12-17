@@ -78,7 +78,7 @@ public class Sensor {
 	{
 		posicion = pos;
 		if(zona.height!=0)
-		zona.setArcByCenter(pos.x, (pos.y+(zona.height/2)), 
+		zona.setArcByCenter(pos.x, pos.y,	//zona.setArcByCenter(pos.x, (pos.y+(zona.height/2)), 
 				zona.height, zona.start, zona.extent, Arc2D.PIE);
 	}
 	
