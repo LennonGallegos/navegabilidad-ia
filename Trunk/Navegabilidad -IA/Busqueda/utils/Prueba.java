@@ -71,8 +71,8 @@ public class Prueba {
 		int i = 0;
 		while (i<1000)
 			{
-			Thread.sleep(50);
-			//robot.girarXGrados(22.5);
+			Thread.sleep(500);
+			robot.girarXGrados(22.5);
 			robot.avanzar();
 			System.out.println(robot.posicion.x);
 			frame.repaint();

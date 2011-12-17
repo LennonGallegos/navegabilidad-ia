@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 import javax.swing.JPanel;
@@ -37,7 +38,12 @@ public class Grafico extends JPanel {
 		g2d.draw(new Line2D.Double(ANCHO/2-(largo/2)+largo, ALTO/2-largo, ANCHO/2-(largo/2)+largo, ALTO/2));
 		
 		if(agente != null)
+			{
 			g2d.draw(agente.sensor.zona);
+			g2d.draw(agente.direccion);
+			g2d.setColor(Color.RED);
+			g2d.draw(new Ellipse2D.Double(agente.posicion.x-5,agente.posicion.y-5,10,10));
+			}
 	}
 
 

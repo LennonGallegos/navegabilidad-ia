@@ -30,35 +30,33 @@ public class Robot {
 		this.posicion = posicion;
 		//Empieza con una dirección "Norte".
 		this.direccion = new Line2D.Double(posicion, 
-				new Point2D.Double(posicion.x,posicion.y+1));
+				new Point2D.Double(posicion.x,posicion.y-60));
 		this.anguloActual = 90;
 	}
 	
 	
 	public void girarXGrados(double giro)
 	{
-		this.anguloActual += giro;
+		this.anguloActual -= giro;
 		if(anguloActual >= 360)
 			anguloActual -= 360;
-		double radianes = Math.toRadians(anguloActual);
-		(BigDecimal.valueOf(Math.sin(radianes)).setScale(2,RoundingMode.HALF_EVEN)).doubleValue();
+		double radianes = Math.toRadians(anguloActual-180);
 		//double xFinal = direccion.x1 + Math.round(Math.cos(radianes));
-		double xFinal = direccion.x1 + (BigDecimal.valueOf(Math.cos(radianes)).setScale(2,RoundingMode.HALF_EVEN)).doubleValue();
+		double xFinal = direccion.x1 + Math.toDegrees((BigDecimal.valueOf(Math.cos(radianes)).setScale(2,RoundingMode.HALF_EVEN)).doubleValue());
 		//double yFinal = direccion.y1 + Math.round(Math.sin(radianes));
-		double yFinal = (BigDecimal.valueOf(Math.sin(radianes)).setScale(2,RoundingMode.HALF_EVEN)).doubleValue();
-		
+		double yFinal = direccion.y1 + Math.toDegrees((BigDecimal.valueOf(Math.sin(radianes)).setScale(2,RoundingMode.HALF_EVEN)).doubleValue());
+
 		this.direccion = new Line2D.Double(direccion.x1,direccion.y1,xFinal,yFinal);
+		System.out.println(anguloActual);
 		this.sensor.girarXGrados(giro);
+		
 	}
 	
 	public void avanzar()
 	{
-		this.posicion.x++;
-		this.posicion.y++;
-		this.sensor.posicion.x++;
-		this.sensor.posicion.y++;
-		this.sensor.zona.x++;
-		this.sensor.zona.y++;
+		this.posicion=MathAux.avanzarEnLineaRecta(direccion,posicion, 10);
+		this.sensor.setPosicion(this.posicion);
+		
 	}
 
 
