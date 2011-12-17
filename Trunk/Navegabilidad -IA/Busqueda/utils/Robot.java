@@ -27,6 +27,7 @@ public class Robot {
 	public Robot(Point2D.Double posicion) {
 		super();
 		this.sensor = new Sensor(posicion, MathAux.NORTE);
+		this.posicion = posicion;
 		//Empieza con una dirección "Norte".
 		this.direccion = new Line2D.Double(posicion, 
 				new Point2D.Double(posicion.x,posicion.y+1));
@@ -48,6 +49,16 @@ public class Robot {
 		
 		this.direccion = new Line2D.Double(direccion.x1,direccion.y1,xFinal,yFinal);
 		this.sensor.girarXGrados(giro);
+	}
+	
+	public void avanzar()
+	{
+		this.posicion.x++;
+		this.posicion.y++;
+		this.sensor.posicion.x++;
+		this.sensor.posicion.y++;
+		this.sensor.zona.x++;
+		this.sensor.zona.y++;
 	}
 
 
