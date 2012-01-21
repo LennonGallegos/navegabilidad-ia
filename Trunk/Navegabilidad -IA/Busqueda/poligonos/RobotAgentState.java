@@ -67,6 +67,7 @@ public class RobotAgentState extends SearchBasedAgentState {
     public void initState() {
         position = X;
         nodosAdyacentes = new ArrayList<String>();
+        robot = new Robot();
 //        nodosAdyacentes.add(B);
 //        nodosAdyacentes.add(E);
 //        nodosAdyacentes.add(F);
@@ -75,7 +76,7 @@ public class RobotAgentState extends SearchBasedAgentState {
     }
 
     @Override
-    public void updateState(Perception p) {
+    public void updateState(Perception p) { //Obtiene los nodos adyacentes actuales y los reemplaza por los que tenia
         RobotPerception perception = (RobotPerception) p;
         ArrayList<String> nodos = perception.getNodosAdyacentes();
         quitarNodosAdyacentes();

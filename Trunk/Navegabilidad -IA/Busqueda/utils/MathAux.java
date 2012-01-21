@@ -16,7 +16,11 @@ public class MathAux {
 	public final static int OESTE = 3;
 	public final static int ANCHO = 640;
 	public final static int ALTO = 480;
-	
+	public final static int PRECISION =3;
+	private static int primeraVez=1;
+	public final static double X_DEFAULT =ANCHO/2;
+	public final static double Y_DEFAULT =ALTO/2;
+	public final static int CANTIDAD_PAREDES =10;
 	
 	public static final float calcAngle(Point p0, Point p1)
 	{
@@ -66,18 +70,44 @@ public class MathAux {
     	double y2 = direccion.y2;
     	double x = 0;
     	double y = 0;
+    	
     	if((x2-x1)==0)
 		{
-    		y = pos.y-step;
     		x = pos.x;
+    		if(y2>y1) //Hacia el Sur 
+    			y = pos.y+step;
+    		else if(y2<y1) //Hacia el Norte
+    				y = pos.y-step;
+    			
+    		
 		}
+    	else if((y2-y1)==0)
+		{
+			y = pos.y;
+			if(x2>x1) //Hacia la derecha 
+    			x = pos.x+step;
+    		else if(x2<x1) //Hacia la izquierda
+    				x = pos.x-step;
+		}
+			
     	else
 		{
+    		if(x2>x1)
+    			x = pos.x+step;
+    		else
+    			x = pos.x-step;	
     		y = ((y2-y1)/(x2-x1))*(x-x1)+y1;
-    		x = pos.x+step;
 		}
-    	
+    	if(primeraVez==1)
+    		{
+    			primeraVez=0;
+    			Point2D.Double dirPuntoFinal = avanzarEnLineaRecta(direccion, new Point2D.Double(x,y), 30);
+    			direccion.x1=x; direccion.y1=y; direccion.x2=dirPuntoFinal.x; direccion.y2=dirPuntoFinal.y;
+    			primeraVez=1;
+    		}
+		
     	return new Point2D.Double(x,y);
     }
+    
 
 }

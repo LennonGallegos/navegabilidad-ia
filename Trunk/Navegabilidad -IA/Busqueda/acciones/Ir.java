@@ -61,6 +61,6 @@ public class Ir extends SearchAction {
 
     @Override
     public String toString() {
-        return "Ir";
+        return "Ir a "+destino;
     }
 }

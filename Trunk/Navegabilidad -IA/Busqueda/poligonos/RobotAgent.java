@@ -22,8 +22,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import acciones.*;
-
+import acciones.Ir;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
@@ -44,6 +43,8 @@ public class RobotAgent extends SearchBasedAgent {
 
 	        // Robot agent actions
 	        Vector<SearchAction> actions = new Vector<SearchAction>();
+	        RobotEnvironmentState.initNodos();
+	        RobotEnvironmentState.initParedes();
 			int index = RobotEnvironmentState.nodos.size();
 			for(int i=0;i<index;i++)
 			{

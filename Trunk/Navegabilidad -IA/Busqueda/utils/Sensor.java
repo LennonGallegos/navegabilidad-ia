@@ -13,6 +13,8 @@ public class Sensor {
 	
 	public Point2D.Double posicion;
 	public Arc2D.Double zona;
+	private static double RADIO = 30;
+	private static double EXTENSION_ANGULAR = 45;
 	
 	public Sensor() {
 		super();
@@ -28,10 +30,12 @@ public class Sensor {
 	public Sensor(Point2D.Double posicion, int direccionInicial ) {
 		super();
 		this.zona = new Arc2D.Double();
-		this.zona.extent = 45;
-		this.zona.height = this.zona.width = 30;
-		setPosicion(posicion);
-		double restaAngulo =  (BigDecimal.valueOf(this.zona.extent/2).setScale(2,RoundingMode.HALF_EVEN)).doubleValue();
+		//this.zona.extent = 45;
+		//this.zona.height = this.zona.width = 30;
+		zona.setArcByCenter(posicion.x, posicion.y,	//zona.setArcByCenter(pos.x, (pos.y+(zona.height/2)), 
+		RADIO, zona.start, EXTENSION_ANGULAR, Arc2D.PIE);
+		//setPosicion(posicion);
+		double restaAngulo =  (BigDecimal.valueOf(this.zona.extent/2).setScale(MathAux.PRECISION,RoundingMode.HALF_EVEN)).doubleValue();
 		switch(direccionInicial)
 		{
 			case MathAux.NORTE:
@@ -67,7 +71,7 @@ public class Sensor {
 	{
 		if(zona.extent==0)
 			return zona.start;
-		double anguloResult = zona.start + (BigDecimal.valueOf(this.zona.extent/2).setScale(2,RoundingMode.HALF_EVEN)).doubleValue();
+		double anguloResult = zona.start + (BigDecimal.valueOf(this.zona.extent/2).setScale(MathAux.PRECISION,RoundingMode.HALF_EVEN)).doubleValue();
 		if(anguloResult>=360)
 			return anguloResult - 360;
 		else
@@ -77,9 +81,8 @@ public class Sensor {
 	public void setPosicion(Point2D.Double pos)
 	{
 		posicion = pos;
-		if(zona.height!=0)
-		zona.setArcByCenter(pos.x, pos.y,	//zona.setArcByCenter(pos.x, (pos.y+(zona.height/2)), 
-				zona.height, zona.start, zona.extent, Arc2D.PIE);
+		zona.x = pos.x-zona.width/2;
+		zona.y = pos.y-zona.height/2;
 	}
 	
 	public void setAngulo(double anguloInicial, double extensionAngular)
