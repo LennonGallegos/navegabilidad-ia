@@ -30,6 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.Point;
 import java.awt.font.LayoutPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -38,6 +39,10 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle;
 
+import poligonos.Nodo;
+import poligonos.RobotEnvironment;
+import poligonos.RobotMain;
+
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.state.datastructure.Graph;
 
@@ -45,7 +50,7 @@ public class Prueba {
 	public static	Robot robot;
     public static void main(String[] args) throws PrologConnectorException, InterruptedException {
     	
-    	robot = new Robot(new Point2D.Double(200,200));
+    	robot = new Robot(new Point2D.Double(170,260));
 //    	System.out.println(robot.direccion.getP1().distance(robot.direccion.getP2()));
 //    	imprimirDireccion();
 //    	robot.girarXGrados(90);
@@ -59,24 +64,55 @@ public class Prueba {
 //    	robot.girarXGrados(45);
 //    	imprimirDireccion();
 //    	System.out.println(robot.direccion.getP1().distance(robot.direccion.getP2()));
-    	
-    	Grafico graf = new Grafico(640,480,Color.WHITE,robot);
+    	Nodo nodo1 = new Nodo(new Point(100,100),"Nombre");
+    	Grafico graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,robot,nodo1);
+    	RobotEnvironment environment = new RobotEnvironment();
+    	graf.setNodos(environment.getEnvironmentState().getNodos());
     	JFrame frame = new JFrame("Prueba");
-    	frame.setSize(640, 480);
+    	frame.setSize(MathAux.ANCHO,MathAux.ALTO);
     	frame.setLocationRelativeTo(null);
     	frame.setResizable(false);
     	frame.add(graf);
     	frame.setVisible(true);
-
+    	
+    	System.out.println("Angulo actual: "+robot.anguloActual);
 		int i = 0;
-		while (i<1000)
+		while (i<3)
 			{
 			Thread.sleep(500);
-			robot.girarXGrados(22.5);
-			robot.avanzar();
-			System.out.println(robot.posicion.x);
+			robot.girarXGrados(45);
 			frame.repaint();
+			Thread.sleep(1000);
+			robot.avanzar();
+			//robot.sensor.zona.x -= 10;
+			//robot.sensor.zona.y -= 10;
+			System.out.println(robot.anguloActual);
+			frame.repaint();
+			i++;
 			}
+		Thread.sleep(500);
+		frame.repaint();
+		robot.setOrientacion(MathAux.NORTE);
+		Thread.sleep(500);
+		frame.repaint();
+		Thread.sleep(500);
+		double anguloRot=MathAux.getAnguloRotacion(robot.direccion.getP1(), robot.direccion.getP2(), nodo1.posicion);
+		System.out.println("Angulo: "+anguloRot);
+    	robot.girarXGrados(-anguloRot);
+		
+		i=0;while (!robot.sensor.zona.intersects(nodo1.zona.getBounds2D())){frame.repaint(); 		Thread.sleep(500); 		robot.avanzar(); 		frame.repaint(); 		i++;}
+//		robot.girarXGrados(22.5);
+//		i=0;while (i<3)	{frame.repaint(); 		Thread.sleep(500); 		robot.avanzar(); 		frame.repaint(); 		i++;}
+//		robot.girarXGrados(22.5);
+//		i=0;while (i<3){frame.repaint(); 		Thread.sleep(500); 		robot.avanzar(); 		frame.repaint(); 		i++;}
+//		robot.girarXGrados(45);
+//		i=0;while (i<3){frame.repaint(); 		Thread.sleep(1000); 		robot.avanzar(); 		frame.repaint(); 		i++;}
+//		robot.girarXGrados(22.5);
+//		i=0;while (i<3)	{frame.repaint(); 		Thread.sleep(1000); 		robot.avanzar(); 		frame.repaint(); 		i++;}
+//		robot.girarXGrados(22.5);
+//		frame.repaint();
+		
+		 
 
     	
        

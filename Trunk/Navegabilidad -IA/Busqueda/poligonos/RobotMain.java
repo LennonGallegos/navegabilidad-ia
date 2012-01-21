@@ -18,12 +18,19 @@ package poligonos;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.awt.Color;
+
+import javax.swing.JFrame;
+
+import utils.Grafico;
+import utils.MathAux;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
 
 public class RobotMain {
 
-    public static void main(String[] args) throws PrologConnectorException {
+    @SuppressWarnings("static-access")
+	public static void main(String[] args) throws PrologConnectorException {
     	
     	
     	Long s = System.currentTimeMillis();
@@ -32,6 +39,16 @@ public class RobotMain {
         RobotEnvironment environment = new RobotEnvironment();
         SearchBasedAgentSimulator simulator =
                 new SearchBasedAgentSimulator(environment, agent);
+        
+        Grafico graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agent.getAgentState().robot);
+        graf.setNodos(environment.getEnvironmentState().nodos);
+        graf.setParedes(environment.getEnvironmentState().paredes);
+        JFrame frame = new JFrame("Prueba");
+    	frame.setSize(MathAux.ANCHO,MathAux.ALTO);
+    	frame.setLocationRelativeTo(null);
+    	frame.setResizable(false);
+    	frame.add(graf);
+    	frame.setVisible(true);
         
         simulator.start();
         

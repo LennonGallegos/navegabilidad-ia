@@ -1,13 +1,17 @@
 package poligonos;
 
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Nodo {
 	
-	private Point posicion;
-	private ArrayList<Nodo> adyacentes;
-	private String nombre;
+	public Point2D posicion;
+	public ArrayList<Nodo> adyacentes;
+	public String nombre;
+	public Ellipse2D.Double zona;
+	public static final int DIAMETRO_DEFAULT = 10;
 	
 	
 	
@@ -16,19 +20,22 @@ public class Nodo {
 		posicion = new Point();
 		adyacentes = new ArrayList<Nodo>();
 		nombre = "";
+		zona = new Ellipse2D.Double(posicion.getX(),posicion.getY(),DIAMETRO_DEFAULT,DIAMETRO_DEFAULT);
 	}
 	
-	public Nodo(Point posicion, String nombre) {
+	public Nodo(Point2D point2D, String nombre) {
 		super();
-		this.posicion = posicion;
+		this.posicion = point2D;
 		this.nombre = nombre;
 		adyacentes = new ArrayList<Nodo>();
+		zona = new Ellipse2D.Double(posicion.getX()-DIAMETRO_DEFAULT/2,posicion.getY()-DIAMETRO_DEFAULT/2,DIAMETRO_DEFAULT,DIAMETRO_DEFAULT);
 	}
 	public Nodo(String nombre) {
 		super();
 		this.nombre = nombre;
-		posicion = new Point();
+		posicion = new Point2D.Double();
 		adyacentes = new ArrayList<Nodo>();
+		zona = new Ellipse2D.Double(posicion.getX(),posicion.getY(),DIAMETRO_DEFAULT,DIAMETRO_DEFAULT);
 	}
 
 	public ArrayList<Nodo> getAdyacentes() {
@@ -37,11 +44,11 @@ public class Nodo {
 	public void setAdyacentes(ArrayList<Nodo> adyacentes) {
 		this.adyacentes = adyacentes;
 	}
-	public Point getPosicion() {
+	public Point2D getPosicion() {
 		return posicion;
 	}
-	public void setPosicion(Point posicion) {
-		this.posicion = posicion;
+	public void setPosicion(Point2D point2D) {
+		this.posicion = point2D;
 	}
 	
 	public String getNombre() {
@@ -102,10 +109,11 @@ public class Nodo {
 		adyacentes.remove(index);
 	}
 	
-	
-	
-	
-	
+	@Override
+	public String toString()
+	{
+		return nombre + " ("+posicion.getX()+" , "+posicion.getY()+")";
+	}
 	
 	
 
