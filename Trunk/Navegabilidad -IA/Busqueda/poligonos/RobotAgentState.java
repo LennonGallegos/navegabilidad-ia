@@ -68,17 +68,51 @@ public class RobotAgentState extends SearchBasedAgentState {
         position = X;
         nodosAdyacentes = new ArrayList<String>();
         robot = new Robot();
-//        nodosAdyacentes.add(B);
-//        nodosAdyacentes.add(E);
-//        nodosAdyacentes.add(F);
-//        nodosAdyacentes.add(C);
-
     }
 
     @Override
     public void updateState(Perception p) { //Obtiene los nodos adyacentes actuales y los reemplaza por los que tenia
         RobotPerception perception = (RobotPerception) p;
         ArrayList<String> nodos = perception.getNodosAdyacentes();
+        
+        if(position=="A")
+			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.A_INDEX]);
+        else  if(position=="B")
+			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.B_INDEX]);
+        	else
+        	 if(position=="C")
+     			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.C_INDEX]);
+         	else
+           	 if(position=="D")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.D_INDEX]);
+         	else
+           	 if(position=="E")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.E_INDEX]);
+         	else
+           	 if(position=="F")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.F_INDEX]);
+         	else
+           	 if(position=="G")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.G_INDEX]);
+         	else
+           	 if(position=="H")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.H_INDEX]);
+         	else
+           	 if(position=="I")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.I_INDEX]);
+         	else
+           	 if(position=="X")
+        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.X_INDEX]);
+        
+        RobotMain.frame.repaint();
+        try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+
         quitarNodosAdyacentes();
         for (int i = 0; i < nodos.size(); i++) {
 			addNodoAyacente(nodos.get(i));
@@ -108,6 +142,8 @@ public class RobotAgentState extends SearchBasedAgentState {
     }
 
     public void setPosition(String position) {
+    	if(position=="I")
+    		this.position=position;
         this.position = position;
     }
     

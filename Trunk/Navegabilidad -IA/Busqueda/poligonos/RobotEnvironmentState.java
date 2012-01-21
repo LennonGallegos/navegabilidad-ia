@@ -66,7 +66,7 @@ public class RobotEnvironmentState extends EnvironmentState {
         {I, G, H},
         {X, B, C, E, F}
         };
-    public static final Point2D[] POSICIONES = new Point2D[]{
+    public static final Point2D.Double[] POSICIONES = new Point2D.Double[]{
         new Point2D.Double(MathAux.ANCHO/2-100,MathAux.ALTO/2+75),//a
         new Point2D.Double(MathAux.ANCHO/2-75,MathAux.ALTO/2+75),//b
         new Point2D.Double(MathAux.ANCHO/2+100,MathAux.ALTO/2+75),//c

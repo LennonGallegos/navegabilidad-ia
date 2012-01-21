@@ -19,18 +19,22 @@ package poligonos;
  */
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 import javax.swing.JFrame;
 
 import utils.Grafico;
 import utils.MathAux;
+import utils.Robot;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
 
 public class RobotMain {
 
+	public static Grafico graf ;
+	public static JFrame frame;
     @SuppressWarnings("static-access")
-	public static void main(String[] args) throws PrologConnectorException {
+	public static void main(String[] args) throws PrologConnectorException, InterruptedException {
     	
     	
     	Long s = System.currentTimeMillis();
@@ -40,21 +44,27 @@ public class RobotMain {
         SearchBasedAgentSimulator simulator =
                 new SearchBasedAgentSimulator(environment, agent);
         
-        Grafico graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agent.getAgentState().robot);
-        graf.setNodos(environment.getEnvironmentState().nodos);
-        graf.setParedes(environment.getEnvironmentState().paredes);
-        JFrame frame = new JFrame("Prueba");
+        initInterfaz(agent.getAgentState());
+        
+        simulator.start();
+        Thread.sleep(300);
+        frame.repaint();
+        
+        System.out.println("Tiempo transcurrido (Milisegundos): "+ (System.currentTimeMillis() - s));
+    }
+	private static void initInterfaz(RobotAgentState agentState) {
+		graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agentState.robot);
+        graf.setNodos(RobotEnvironmentState.nodos);
+        graf.setParedes(RobotEnvironmentState.paredes);
+        frame = new JFrame("Prueba");
     	frame.setSize(MathAux.ANCHO,MathAux.ALTO);
     	frame.setLocationRelativeTo(null);
     	frame.setResizable(false);
     	frame.add(graf);
     	frame.setVisible(true);
-        
-        simulator.start();
-        
-        System.out.println("Tiempo transcurrido (Milisegundos): "+ (System.currentTimeMillis() - s));
-    }
-    
+		
+	}
+	
     //PARA QUE SE EJECUTE 20 VECES SEGUIDAS Y TOME EL TIEMPO EN CADA UNA
 //    public static void main(String[] args) throws PrologConnectorException {
 //    	String tiempos [];
