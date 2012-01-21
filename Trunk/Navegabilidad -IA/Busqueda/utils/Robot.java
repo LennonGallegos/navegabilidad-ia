@@ -85,6 +85,13 @@ public class Robot {
 			this.anguloActual = 90;
 		}
 	}
+	
+	public void setPosicion(Point2D.Double point)
+	{
+		this.posicion= point;
+		this.sensor = new Sensor(posicion, MathAux.NORTE);
+		
+	}
 
 
 
