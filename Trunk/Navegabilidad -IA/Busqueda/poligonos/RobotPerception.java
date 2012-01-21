@@ -42,6 +42,7 @@ public class RobotPerception extends Perception {
     private int energy;
 
     private int direccion;
+    public String posActual="X";
     private ArrayList<String> nodosAdyacentes;
     
     //TODO: Hacer esto de los sensores.
@@ -66,9 +67,9 @@ public class RobotPerception extends Perception {
         RobotEnvironmentState environmentState =
                 robotEnvironment.getEnvironmentState();
         
-        String posicionActual = robotAgent.getAgentState().position;
+        posActual= robotAgent.getAgentState().position;
         
-        this.setNodosAdyacentes(robotEnvironment.getPercepcion360(posicionActual));
+        this.setNodosAdyacentes(robotEnvironment.getPercepcion360(posActual));
         
 //        int row = environmentState.getAgentPosition()[0];
 //        int col = environmentState.getAgentPosition()[1];
