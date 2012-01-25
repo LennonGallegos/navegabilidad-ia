@@ -19,13 +19,11 @@ package poligonos;
  */
 
 import java.awt.Color;
-import java.awt.geom.Point2D;
 
 import javax.swing.JFrame;
 
 import utils.Grafico;
 import utils.MathAux;
-import utils.Robot;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
 
@@ -45,12 +43,15 @@ public class RobotMain {
                 new SearchBasedAgentSimulator(environment, agent);
         
         initInterfaz(agent.getAgentState());
+        frame.repaint();
+        Thread.sleep(300);
         
         simulator.start();
         Thread.sleep(300);
         frame.repaint();
         
         System.out.println("Tiempo transcurrido (Milisegundos): "+ (System.currentTimeMillis() - s));
+        System.out.println("Distancia recorrida: "+ agent.getAgentState().distanciaRecorrida);
     }
 	private static void initInterfaz(RobotAgentState agentState) {
 		graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agentState.robot);
