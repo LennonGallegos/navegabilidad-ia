@@ -47,6 +47,7 @@ public class RobotAgentState extends SearchBasedAgentState {
     String position;
     
     public Robot robot;
+    public Double distanciaRecorrida=0D;
 
     /**
      * This map has a point of the world (A, B, C, ...) as key, and a collection
@@ -75,36 +76,6 @@ public class RobotAgentState extends SearchBasedAgentState {
         RobotPerception perception = (RobotPerception) p;
         ArrayList<String> nodos = perception.getNodosAdyacentes();
         
-        if(position=="A")
-			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.A_INDEX]);
-        else  if(position=="B")
-			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.B_INDEX]);
-        	else
-        	 if(position=="C")
-     			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.C_INDEX]);
-         	else
-           	 if(position=="D")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.D_INDEX]);
-         	else
-           	 if(position=="E")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.E_INDEX]);
-         	else
-           	 if(position=="F")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.F_INDEX]);
-         	else
-           	 if(position=="G")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.G_INDEX]);
-         	else
-           	 if(position=="H")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.H_INDEX]);
-         	else
-           	 if(position=="I")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.I_INDEX]);
-         	else
-           	 if(position=="X")
-        			this.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.X_INDEX]);
-        
-        RobotMain.frame.repaint();
         try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
@@ -142,8 +113,6 @@ public class RobotAgentState extends SearchBasedAgentState {
     }
 
     public void setPosition(String position) {
-    	if(position=="I")
-    		this.position=position;
         this.position = position;
     }
     
