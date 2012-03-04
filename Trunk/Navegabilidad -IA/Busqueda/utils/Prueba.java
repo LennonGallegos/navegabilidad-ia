@@ -75,7 +75,25 @@ public class Prueba {
     	frame.add(graf);
     	frame.setVisible(true);
     	
+//    	Thread hilo = new Thread(new Runnable() {
+//			public void run() {
+//				try {
+//					RobotMain.main(null);
+//				} catch (PrologConnectorException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//    	
+//    	hilo.start();
+//    	System.out.println(hilo.isAlive());
+    	
     	System.out.println("Angulo actual: "+robot.anguloActual);
+    	
 		int i = 0;
 		while (i<3)
 			{
@@ -95,7 +113,7 @@ public class Prueba {
 		robot.setOrientacion(MathAux.NORTE);
 		Thread.sleep(500);
 		frame.repaint();
-		Thread.sleep(500);
+		Thread.sleep(1000);
 		double anguloRot=MathAux.getAnguloRotacion(robot.direccion.getP1(), robot.direccion.getP2(), nodo1.posicion);
 		System.out.println("Angulo: "+anguloRot);
     	robot.girarXGrados(-anguloRot);
