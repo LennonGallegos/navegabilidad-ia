@@ -222,7 +222,7 @@ public class RobotEnvironmentState extends EnvironmentState {
     	int indexA = nodos.indexOf(new Nodo(a));
     	int indexB = nodos.indexOf(new Nodo(b));
     	
-    	if(!nodos.get(indexA).esAdyacente(b))
+    	if(nodos.get(indexA).esAdyacente(b))
     		return false;
     	
     	nodos.get(indexA).addAdyacente(b);

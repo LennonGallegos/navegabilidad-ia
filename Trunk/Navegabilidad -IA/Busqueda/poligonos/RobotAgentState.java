@@ -48,6 +48,7 @@ public class RobotAgentState extends SearchBasedAgentState {
     
     public Robot robot;
     public Double distanciaRecorrida=0D;
+    public Nodo objetivo;
 
     /**
      * This map has a point of the world (A, B, C, ...) as key, and a collection
@@ -61,6 +62,7 @@ public class RobotAgentState extends SearchBasedAgentState {
     public RobotAgentState clone() {
         RobotAgentState newState = new RobotAgentState();
         newState.setPosition(position);
+        newState.setDestino(objetivo);
         return newState;
     }
 
@@ -126,6 +128,14 @@ public class RobotAgentState extends SearchBasedAgentState {
 
 	public ArrayList<String> getNodosAdyacentes() {
 		return nodosAdyacentes;
+	}
+
+	public Nodo getDestino() {
+		return objetivo;
+	}
+
+	public void setDestino(Nodo destino) {
+		this.objetivo = destino;
 	}
 
     

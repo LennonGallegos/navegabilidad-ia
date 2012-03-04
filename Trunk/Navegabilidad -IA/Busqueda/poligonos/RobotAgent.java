@@ -28,6 +28,7 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
+import frsf.cidisi.faia.solver.search.AStarSearch;
 import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 
@@ -50,6 +51,7 @@ public class RobotAgent extends SearchBasedAgent {
 			{
 				actions.addElement(new Ir(RobotEnvironmentState.nodos.get(i)));
 			}
+			agentState.objetivo=RobotEnvironmentState.nodos.get(RobotEnvironmentState.I_INDEX);
 	        // Robot agent problem
 	        Problem problem = new Problem(goal, agentState, actions);
 	        this.setProblem(problem);
@@ -57,8 +59,11 @@ public class RobotAgent extends SearchBasedAgent {
 
     @Override
     public Action selectAction() {
+    	CostFunction funcionCosto = new CostFunction();
+    	Heuristic heurisitca = new Heuristic();
         // Breath first strategy
-        BreathFirstSearch searchStrategy = new BreathFirstSearch();
+       // BreathFirstSearch searchStrategy = new BreathFirstSearch();
+        AStarSearch searchStrategy = new AStarSearch(funcionCosto,heurisitca);
 //        DepthFirstSearch searchStrategy = new DepthFirstSearch();
 
         Search searchSolver = new Search(searchStrategy);
