@@ -1,5 +1,6 @@
 package utils;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ public class Robot {
 	public Sensor sensor;
 	public Line2D.Double direccion;
 	public Point2D.Double posicion;
+	public Ellipse2D.Double zona;
 	public double anguloActual;
 	
 
@@ -20,6 +22,7 @@ public class Robot {
 		this.sensor = sensor;
 		this.direccion = direccion;
 		this.posicion = posicion;
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 	}
 
 
@@ -32,6 +35,7 @@ public class Robot {
 		this.direccion = new Line2D.Double(posicion, 
 				new Point2D.Double(posicion.x,posicion.y-60));
 		this.anguloActual = 90;
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 	}
 	
 	
@@ -43,6 +47,7 @@ public class Robot {
 		this.direccion = new Line2D.Double(this.posicion, 
 				new Point2D.Double(this.posicion.x,this.posicion.y-60)); //60 es la longitud de la linea direccional (irrelevante)
 		this.anguloActual = 90;
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 	}
 
 
@@ -63,15 +68,15 @@ public class Robot {
 				)).setScale(MathAux.PRECISION,RoundingMode.HALF_EVEN).doubleValue();
 
 		this.direccion = new Line2D.Double(direccion.x1,direccion.y1,xFinal,yFinal);
-		System.out.println(anguloActual);
 		this.sensor.girarXGrados(giro);
 		
 	}
 	
 	public void avanzar()
 	{
-		this.posicion=MathAux.avanzarEnLineaRecta(direccion,posicion, 5);
+		this.posicion=MathAux.avanzarEnLineaRecta(direccion,posicion, MathAux.PASO);
 		this.sensor.setPosicion(this.posicion);
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 		
 	}
 	
@@ -89,6 +94,7 @@ public class Robot {
 	public void setPosicion(Point2D.Double point)
 	{
 		this.posicion= point;
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 		this.sensor = new Sensor(posicion, MathAux.NORTE);
 		
 	}

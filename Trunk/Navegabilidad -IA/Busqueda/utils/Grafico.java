@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 
 import poligonos.Nodo;
 
+@SuppressWarnings("serial")
 public class Grafico extends JPanel {
 	
 	public Arc2D arco=null;
@@ -59,7 +59,8 @@ public class Grafico extends JPanel {
 			g2d.draw(agente.sensor.zona);
 			g2d.draw(agente.direccion);
 			g2d.setStroke(new BasicStroke(3.0f)); //Ancho de borde
-			g2d.draw(new Ellipse2D.Double(agente.posicion.x-5,agente.posicion.y-5,10,10));
+			g2d.draw(agente.zona);
+			//g2d.draw(new Ellipse2D.Double(agente.posicion.x-5,agente.posicion.y-5,10,10));
 			g2d.setStroke(new BasicStroke(2.0f)); //Ancho de borde
 			}
 		if(destino != null)
