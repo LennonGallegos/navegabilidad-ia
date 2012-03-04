@@ -20,17 +20,16 @@ package poligonos;
 
 import java.awt.Color;
 
-import javax.swing.JFrame;
-
 import utils.Grafico;
 import utils.MathAux;
+import utils.Ventana;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
 
 public class RobotMain {
 
 	public static Grafico graf ;
-	public static JFrame frame;
+	public static Ventana frame;
     @SuppressWarnings("static-access")
 	public static void main(String[] args) throws PrologConnectorException, InterruptedException {
     	
@@ -45,11 +44,12 @@ public class RobotMain {
         initInterfaz(agent.getAgentState());
         frame.repaint();
         Thread.sleep(300);
-        
+        hilo.start();
         simulator.start();
         Thread.sleep(300);
         frame.repaint();
-        
+        hilo.stop();
+        System.out.println(hilo.isAlive());
         System.out.println("Tiempo transcurrido (Milisegundos): "+ (System.currentTimeMillis() - s));
         System.out.println("Distancia recorrida: "+ agent.getAgentState().distanciaRecorrida);
     }
@@ -57,35 +57,30 @@ public class RobotMain {
 		graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agentState.robot);
         graf.setNodos(RobotEnvironmentState.nodos);
         graf.setParedes(RobotEnvironmentState.paredes);
-        frame = new JFrame("Prueba");
-    	frame.setSize(MathAux.ANCHO,MathAux.ALTO);
-    	frame.setLocationRelativeTo(null);
-    	frame.setResizable(false);
-    	frame.add(graf);
+        frame = new Ventana("Prueba",graf);
     	frame.setVisible(true);
 		
 	}
 	
-    //PARA QUE SE EJECUTE 20 VECES SEGUIDAS Y TOME EL TIEMPO EN CADA UNA
-//    public static void main(String[] args) throws PrologConnectorException {
-//    	String tiempos [];
-//    	tiempos = new String[20];
-//    	for (int i = 0; i < 20; i++) {
-//			
-//		
-//    	Long s = System.currentTimeMillis();
-//    	
-//    	RobotAgent agent = new RobotAgent();
-//        RobotEnvironment environment = new RobotEnvironment();
-//        SearchBasedAgentSimulator simulator =
-//                new SearchBasedAgentSimulator(environment, agent);
-//        simulator.start();
-//        
-//        tiempos[i]= ""+(System.currentTimeMillis() - s);
-//    	}
-//    	for (int i = 0; i < tiempos.length; i++) {
-//    		System.out.println(tiempos[i]);
-//		}
-//    }
+	static Thread hilo = new Thread(new Runnable() {
+	public void run() {
+		int i = 0;
+		while(i<2000)
+		{
+			try {
+				Thread.sleep(100);
+				frame.repaint();
+//				System.out.println("REPAINT");
+				i++;
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+});
+
+
+	
 
 }

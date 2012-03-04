@@ -36,13 +36,25 @@ public class RobotEnvironment extends Environment {
     public Perception getPercept() {
     	RobotPerception perception = new RobotPerception();
     	
-    	if(sum==1)
-	    	if(this.getEnvironmentState().agregarObstaculoEntre("A", "B"))
+    	switch (sum) {
+		case 1:
+			if(this.getEnvironmentState().agregarObstaculoEntre("A", "B"))
 	    		System.out.println("agregarObstaculoEntre(A, B)");
 	    	else
 	    		System.out.println("A y B ya no son adyacentes.");
-//    	else
-//    		System.out.println("No hay percepciones");;
+			break;
+			
+		case 2:
+			this.getEnvironmentState().quitarObstaculoEntre("A", "B");
+			if(this.getEnvironmentState().agregarObstaculoEntre("C", "D"))
+	    		System.out.println("agregarObstaculoEntre(C, D)");
+	    	else
+	    		System.out.println("C y D ya no son adyacentes.");
+			break;
+
+		default:
+			break;
+		}
     	sum++;
     	perception.setNodosAdyacentes(this.getPercepcion360(this.getEnvironmentState().getPosicionActualRobot()));
 //    	agregarObstaculoEntre("A", "B");
