@@ -43,7 +43,7 @@ public class Ir extends SearchAction {
 		setCosto(agentState.robot.posicion);
 		agentState.distanciaRecorrida+=costo;
 		agentState.setPosition(destino.getNombre());
-        this.setPosicionAgente(agentState);
+       
         return agentState;
     }
 
@@ -54,7 +54,8 @@ public class Ir extends SearchAction {
     public EnvironmentState execute(AgentState ast, EnvironmentState est) {
     	RobotEnvironmentState enviromentState = (RobotEnvironmentState) est;
         RobotAgentState robotState = (RobotAgentState) ast;
-        this.execute((SearchBasedAgentState) ast);
+        this.execute((SearchBasedAgentState) ast); 
+        this.setPosicionAgente(robotState);
         enviromentState.setPosicionActualRobot(robotState.getPosition());
 
         return enviromentState;
@@ -75,35 +76,122 @@ public class Ir extends SearchAction {
     
     private void setPosicionAgente(RobotAgentState robotState)
     {
+    	Point2D.Double posNueva = new Point2D.Double();
     	 if(robotState.getPosition()=="A")
- 			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.A_INDEX]);
-         else  if(robotState.getPosition()=="B")
- 			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.B_INDEX]);
+			posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.A_INDEX];
+			else  if(robotState.getPosition()=="B")
+				posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.B_INDEX];
          	else
          	 if(robotState.getPosition()=="C")
-      			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.C_INDEX]);
-          	else
+         		posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.C_INDEX];
+         		 else
             	 if(robotState.getPosition()=="D")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.D_INDEX]);
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.D_INDEX];
           	else
             	 if(robotState.getPosition()=="E")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.E_INDEX]);
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.E_INDEX];
           	else
             	 if(robotState.getPosition()=="F")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.F_INDEX]);
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.F_INDEX];
           	else
             	 if(robotState.getPosition()=="G")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.G_INDEX]);
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.G_INDEX];
           	else
             	 if(robotState.getPosition()=="H")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.H_INDEX]);
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.H_INDEX];
           	else
             	 if(robotState.getPosition()=="I")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.I_INDEX]);
-          	else
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.I_INDEX];
+            		 else
             	 if(robotState.getPosition()=="X")
-         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.X_INDEX]);
+            		 posNueva = RobotEnvironmentState.POSICIONES[RobotEnvironmentState.X_INDEX];
+    	 posNueva.x-=Nodo.DIAMETRO_DEFAULT/4;
+    	 posNueva.y-=Nodo.DIAMETRO_DEFAULT/4;
+    	 robotState.robot.setOrientacion(MathAux.NORTE);
+    	 double anguloRot=MathAux.getAnguloRotacion(robotState.robot.direccion.getP1(), robotState.robot.direccion.getP2(), posNueva);
+    	 if(robotState.getPosition()!="X")
+    		 robotState.robot.girarXGrados(-anguloRot);
+		 try {
+			 RobotMain.frame.repaint();
+			Thread.sleep(1000);
+			RobotMain.frame.repaint();
+		
+		while (!robotState.robot.zona.intersects(destino.zona.getBounds2D()))
+		{Thread.sleep(100); 		
+		robotState.robot.avanzar();
+		}
+    	 robotState.robot.setPosicion(posNueva);
+		 } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    	 if(robotState.getPosition()=="A")
+// 			{
+//    		 robotState.robot.setOrientacion(MathAux.NORTE);
+//    		 //double anguloRot=MathAux.getAnguloRotacion(robotState.robot.direccion.getP1(), robotState.robot.direccion.getP2(), nodo1.posicion);
+//    		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.A_INDEX]));
+//    		 try {
+//    			 RobotMain.frame.repaint();
+//				Thread.sleep(300);
+//				RobotMain.frame.repaint();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.A_INDEX]);
+// 			}
+//         else  if(robotState.getPosition()=="B")
+// 			{
+//        	 
+//        	 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.B_INDEX]));
+//        	 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.B_INDEX]);
+// 			}
+//         	else
+//         	 if(robotState.getPosition()=="C")
+//      			{
+//         		robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.C_INDEX]));
+//         		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.C_INDEX]);
+//      			}
+//          	else
+//            	 if(robotState.getPosition()=="D")
+//         			{
+//            		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.D_INDEX]));
+//            		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.D_INDEX]);
+//         			}
+//          	else
+//            	 if(robotState.getPosition()=="E")
+//         			{
+//            		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.E_INDEX]));
+//            		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.E_INDEX]);
+//         			}
+//          	else
+//            	 if(robotState.getPosition()=="F")
+//         			{
+//            		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.F_INDEX]));
+//            		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.F_INDEX]);
+//         			}
+//          	else
+//            	 if(robotState.getPosition()=="G")
+//         			{
+//            		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.G_INDEX]));
+//            		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.G_INDEX]);
+//         			}
+//          	else
+//            	 if(robotState.getPosition()=="H")
+//         			{
+//            		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.H_INDEX]));
+//            		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.H_INDEX]);
+//         			}
+//          	else
+//            	 if(robotState.getPosition()=="I")
+//         			{
+//            		 robotState.robot.girarXGrados(MathAux.calcAngle(robotState.robot.posicion, RobotEnvironmentState.POSICIONES[RobotEnvironmentState.I_INDEX]));
+//            		 robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.I_INDEX]);
+//         			}
+//          	else
+//            	 if(robotState.getPosition()=="X")
+//         			robotState.robot.setPosicion(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.X_INDEX]);
          
-         RobotMain.frame.repaint();
+         //RobotMain.frame.repaint();
     }
 }
