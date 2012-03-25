@@ -3,8 +3,6 @@ package grafico;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-
 public class MouseAdaptador extends MouseAdapter {
 
 	
@@ -23,7 +21,8 @@ public class MouseAdaptador extends MouseAdapter {
 			PanelDibujo panel = (PanelDibujo) arg0.getSource();
 			panel.xFinal=arg0.getX();
 			panel.yFinal=arg0.getY();
-			panel.redibujarLinea();
+			if(panel.objetivo==PanelDibujo.LINEA_OBJ)
+				panel.redibujarLinea();
 			
 		}
 		//super.mouseDragged(arg0);
@@ -48,7 +47,14 @@ public class MouseAdaptador extends MouseAdapter {
 			PanelDibujo panel = (PanelDibujo) arg0.getSource();
 			panel.xInicial=arg0.getX();
 			panel.yInicial=arg0.getY();
-			
+			if(panel.objetivo==PanelDibujo.INICIO_OBJ)
+			{
+				panel.dibujarInicio();
+			}
+			if(panel.objetivo==PanelDibujo.FIN_OBJ)
+			{
+				panel.dibujarFin();
+			}
 		}
 		//super.mousePressed(arg0);
 	}
@@ -58,21 +64,28 @@ public class MouseAdaptador extends MouseAdapter {
 		if(arg0.getSource() instanceof PanelDibujo)
 		{
 			PanelDibujo panel = (PanelDibujo) arg0.getSource();
-			if(arg0.getX()>0)
-				panel.xFinal=arg0.getX();
-			else
-				panel.xFinal=0;
-			if (arg0.getY()>0)
-				panel.yFinal=arg0.getY();
-			else
-				panel.yFinal=0;
-			
-			if(Math.abs(panel.xFinal-panel.xInicial)<20)
-				panel.xFinal=panel.xInicial;
-			if(Math.abs(panel.yFinal-panel.yInicial)<20)
-				panel.yFinal=panel.yInicial;
-			panel.redibujarLinea();
-			panel.addLinea();
+			if(panel.objetivo==PanelDibujo.LINEA_OBJ)
+			{	
+				if(arg0.getX()>0)
+					panel.xFinal=arg0.getX();
+				else
+					panel.xFinal=0;
+				if (arg0.getY()>0)
+					panel.yFinal=arg0.getY();
+				else
+					panel.yFinal=0;
+				
+				if(Math.abs(panel.xFinal-panel.xInicial)<20)
+					panel.xFinal=panel.xInicial;
+				if(Math.abs(panel.yFinal-panel.yInicial)<20)
+					panel.yFinal=panel.yInicial;
+				panel.redibujarLinea();
+				panel.addLinea();
+			}
+			else if(panel.objetivo==PanelDibujo.NODO_OBJ)
+			{
+				panel.addNodo();
+			}
 		}
 	}
 	
