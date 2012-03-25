@@ -20,6 +20,7 @@ package poligonos;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.io.File;
 import java.util.ArrayList;
 
 import utils.MathAux;
@@ -66,17 +67,30 @@ public class RobotEnvironmentState extends EnvironmentState {
         {I, G, H},
         {X, B, C, E, F}
         };
-    public static final Point2D.Double[] POSICIONES = new Point2D.Double[]{
-        new Point2D.Double(MathAux.ANCHO/2-100,MathAux.ALTO/2+75),//a
-        new Point2D.Double(MathAux.ANCHO/2-75,MathAux.ALTO/2+75),//b
-        new Point2D.Double(MathAux.ANCHO/2+100,MathAux.ALTO/2+75),//c
-        new Point2D.Double(MathAux.ANCHO/2+125,MathAux.ALTO/2+75),//d
-        new Point2D.Double(MathAux.ANCHO/2-75,MathAux.ALTO/2-125),//e
-        new Point2D.Double(MathAux.ANCHO/2+100,MathAux.ALTO/2-125),//f
-        new Point2D.Double(MathAux.ANCHO/2-100,MathAux.ALTO/2-150),//g
-        new Point2D.Double(MathAux.ANCHO/2+125,MathAux.ALTO/2-150),//h
-        new Point2D.Double(MathAux.ANCHO/2,MathAux.ALTO/2-200),//i
-        new Point2D.Double(MathAux.ANCHO/2,MathAux.ALTO/2),//x
+//    public static final Point2D.Double[] POSICIONES = new Point2D.Double[]{
+//        new Point2D.Double(MathAux.ANCHO/2-100,MathAux.ALTO/2+75),//a
+//        new Point2D.Double(MathAux.ANCHO/2-75,MathAux.ALTO/2+75),//b
+//        new Point2D.Double(MathAux.ANCHO/2+100,MathAux.ALTO/2+75),//c
+//        new Point2D.Double(MathAux.ANCHO/2+125,MathAux.ALTO/2+75),//d
+//        new Point2D.Double(MathAux.ANCHO/2-75,MathAux.ALTO/2-125),//e
+//        new Point2D.Double(MathAux.ANCHO/2+100,MathAux.ALTO/2-125),//f
+//        new Point2D.Double(MathAux.ANCHO/2-100,MathAux.ALTO/2-150),//g
+//        new Point2D.Double(MathAux.ANCHO/2+125,MathAux.ALTO/2-150),//h
+//        new Point2D.Double(MathAux.ANCHO/2,MathAux.ALTO/2-200),//i
+//        new Point2D.Double(MathAux.ANCHO/2,MathAux.ALTO/2),//x
+//        };
+    public static final Point2D.Double[] POSICIONES = new Point2D.Double[]{//Traspuesto
+        new Point2D.Double(MathAux.ANCHO/2-200,MathAux.ALTO/2-75),//a
+        new Point2D.Double(MathAux.ANCHO/2-200,MathAux.ALTO/2-50),//b
+        new Point2D.Double(MathAux.ANCHO/2-200,MathAux.ALTO/2+50),//c
+        new Point2D.Double(MathAux.ANCHO/2-200,MathAux.ALTO/2+75),//d
+        new Point2D.Double(MathAux.ANCHO/2+200,MathAux.ALTO/2-50),//e
+        new Point2D.Double(MathAux.ANCHO/2+200,MathAux.ALTO/2+50),//f
+        new Point2D.Double(MathAux.ANCHO/2+225,MathAux.ALTO/2-75),//g
+        new Point2D.Double(MathAux.ANCHO/2+225,MathAux.ALTO/2+75),//h
+        //new Point2D.Double(620,480-50),//i 
+        new Point2D.Double(620,240),//i
+        new Point2D.Double(20,240),//x
         };
     public static ArrayList<Nodo> nodos;
     public static ArrayList<Line2D.Double> paredes;
@@ -153,6 +167,7 @@ public class RobotEnvironmentState extends EnvironmentState {
 	}
 	
 	public static void initParedes(){
+		
 		if(paredes==null)
 		{
 			paredes = new ArrayList<Line2D.Double>();

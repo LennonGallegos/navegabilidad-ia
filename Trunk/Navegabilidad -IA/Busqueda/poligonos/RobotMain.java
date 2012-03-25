@@ -18,18 +18,20 @@ package poligonos;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.awt.Color;
-
-import utils.Grafico;
-import utils.MathAux;
-import utils.Ventana;
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
+import grafico.Grafico;
+import grafico.VentanaSimulacion;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+import utils.MathAux;
 
 public class RobotMain {
 
 	public static Grafico graf ;
-	public static Ventana frame;
+	public static VentanaSimulacion frame;
     @SuppressWarnings("static-access")
 	public static void main(String[] args) throws PrologConnectorException, InterruptedException {
     	
@@ -37,6 +39,7 @@ public class RobotMain {
     	Long s = System.currentTimeMillis();
     	
     	RobotAgent agent = new RobotAgent();
+    	agent.getAgentState().robot.setPosicion(new Point2D.Double(20,240));
         RobotEnvironment environment = new RobotEnvironment();
         SearchBasedAgentSimulator simulator =
                 new SearchBasedAgentSimulator(environment, agent);
@@ -57,7 +60,7 @@ public class RobotMain {
 		graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agentState.robot);
         graf.setNodos(RobotEnvironmentState.nodos);
         graf.setParedes(RobotEnvironmentState.paredes);
-        frame = new Ventana("Prueba",graf);
+        frame = new VentanaSimulacion("Prueba",graf);
     	frame.setVisible(true);
 		
 	}
