@@ -31,6 +31,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     public PanelDibujo panelDibujo;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton rbtnFin;
+    private javax.swing.JRadioButton rbtnInicio;
+    private javax.swing.JRadioButton rbtnNodo;
+    private javax.swing.JRadioButton rbtnPared;
+    private javax.swing.JRadioButton rbtnUnion;
+    private javax.swing.JLabel labelObjetivo;
     // End of variables declaration//GEN-END:variables
 
     /** Creates new form Ventana */
@@ -64,25 +71,73 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnExportar = new BotonPanelDibujo(this,BotonPanelDibujo.ACC_EXPORTAR);
         btnLimpiar = new BotonPanelDibujo(this,BotonPanelDibujo.ACC_LIMPIAR);
-        //panelDibujo = new javax.swing.JPanel();
         panelDibujo = new PanelDibujo(MathAux.ANCHO,MathAux.ALTO,Color.WHITE);
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        rbtnPared = new javax.swing.JRadioButton();
+        labelObjetivo = new javax.swing.JLabel();
+        rbtnNodo = new javax.swing.JRadioButton();
+        rbtnUnion = new javax.swing.JRadioButton();
+        rbtnInicio = new javax.swing.JRadioButton();
+        rbtnFin = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnExportar.setText("Exportar");
         btnLimpiar.setText("Limpiar");
+        labelObjetivo.setText("Objetivo");
 
+        
+        rbtnPared.setText("Pared");rbtnPared.setSelected(true);buttonGroup1.add(rbtnPared);
+        rbtnPared.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	panelDibujo.objetivo=PanelDibujo.LINEA_OBJ;
+            	System.out.println("Pared");
+            }
+        });
+        rbtnNodo.setText("Nodo");buttonGroup1.add(rbtnNodo);
+        rbtnNodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	panelDibujo.objetivo=PanelDibujo.NODO_OBJ;
+                System.out.println("Nodo");
+            }
+        });
+        rbtnUnion.setText("Union");buttonGroup1.add(rbtnUnion);
+        rbtnUnion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	panelDibujo.objetivo=PanelDibujo.LINEA_OBJ;
+            	System.out.println("Union");
+            }
+        });
+        rbtnInicio.setText("Inicio");buttonGroup1.add(rbtnInicio);
+        rbtnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	panelDibujo.objetivo=PanelDibujo.INICIO_OBJ;
+            	System.out.println("Inicio");
+            }
+        });
+        rbtnFin.setText("Fin");buttonGroup1.add(rbtnFin);
+        rbtnFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	panelDibujo.objetivo=PanelDibujo.FIN_OBJ;
+            	System.out.println("Fin");
+            }
+        });
+        
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpiar)
-                    .addContainerGap())
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(btnExportar)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(rbtnFin)
+                        .addComponent(rbtnUnion)
+                        .addComponent(rbtnPared)
+                        .addComponent(btnExportar)
+                        .addComponent(btnLimpiar)
+                        .addComponent(labelObjetivo)
+                        .addComponent(rbtnNodo)
+                        .addComponent(rbtnInicio))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
             jPanel1Layout.setVerticalGroup(
@@ -91,7 +146,19 @@ public class VentanaDibujo extends javax.swing.JFrame {
                     .addComponent(btnExportar)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnLimpiar)
-                    .addContainerGap(246, Short.MAX_VALUE))
+                    .addGap(22, 22, 22)
+                    .addComponent(labelObjetivo)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(rbtnPared)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(rbtnNodo)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(rbtnUnion)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(rbtnInicio)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(rbtnFin)
+                    .addContainerGap(93, Short.MAX_VALUE))
             );
 
         jSplitPane1.setLeftComponent(jPanel1);

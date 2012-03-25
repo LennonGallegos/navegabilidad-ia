@@ -6,6 +6,7 @@ package grafico;
 */
 
 //Se incluyen los paquetes necesarios para la compilacion del programa.
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +17,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import utils.MathAux;
 
 /**
  	En esta clase se definen los metodos necesarios para crear los paneles y se le asocia el listener al panel de
@@ -28,10 +31,19 @@ import javax.swing.JPanel;
 
 public class PanelDibujo extends JPanel{
 
+	public static String NODO_OBJ="nodo";
+	public static String INICIO_OBJ="inicio";
+	public static String FIN_OBJ="fin";
+	public static String LINEA_OBJ="linea";
+	public static Color NODO_COLOR=Color.GRAY;
+	public static Color INICIO_COLOR=Color.GREEN;
+	public static Color FIN_COLOR=Color.RED;
+	public static Color LINEA_COLOR=Color.BLACK;
 	public double xInicial;
 	public double xFinal;
 	public double yInicial;
 	public double yFinal;
+	public String objetivo=LINEA_OBJ;
 	
 	
 /**
@@ -68,9 +80,13 @@ public class PanelDibujo extends JPanel{
 	private Point2D p2,p3;
 	private Line2D Linea=null;
 	private Rectangle2D Rectangulo=null;
+	private Ellipse2D Inicio=null;
+	private Ellipse2D Fin=null;
+	private Ellipse2D Nodo=null;
 	private Ellipse2D Circulo=null;
 	private Ellipse2D Elipse=null;
 	public ArrayList lineas = new ArrayList();
+	public ArrayList nodos = new ArrayList();
 	private ArrayList rectangulos = new ArrayList();
 	private ArrayList circulos = new ArrayList();
 	private ArrayList elipses = new ArrayList();
@@ -177,10 +193,34 @@ public class PanelDibujo extends JPanel{
 		if (Rectangulo !=null) g2.draw((Rectangle2D)Rectangulo);
 		if (Circulo != null) g2.draw((Ellipse2D)Circulo);
 		if (Elipse !=  null) g2.draw((Ellipse2D)Elipse);
+		if (Inicio !=  null) 
+		{
+			g2.setColor(INICIO_COLOR);
+			g2.setStroke(new BasicStroke(2.0f));
+			g2.draw((Ellipse2D)Inicio);
+		}
+		if (Fin !=  null) 
+		{
+			g2.setColor(FIN_COLOR);
+			g2.setStroke(new BasicStroke(2.0f));
+			g2.draw((Ellipse2D)Fin);
+		}
 		if (accion.equals("ROTAR")) g2.rotate(angulo,p1.getX(),p1.getY());	//Con este metodo se rota el dibujo.
 		
-		for (int i = 0; i < lineas.size(); i++)
-   		g2.draw((Line2D)lineas.get(i));
+		if(nodos.size()>0)
+		{
+			g2.setColor(NODO_COLOR);
+			g2.setStroke(new BasicStroke(1.0f));
+			for (int i = 0; i < nodos.size(); i++)
+				g2.draw((Ellipse2D)nodos.get(i));
+		}
+		if(lineas.size()>0)
+		{
+			g2.setColor(LINEA_COLOR);
+			g2.setStroke(new BasicStroke(1.0f));
+			for (int i = 0; i < lineas.size(); i++)
+				g2.draw((Line2D)lineas.get(i));
+		}
 			
 		for (int i = 0; i < rectangulos.size(); i++)
      		g2.draw((Rectangle2D)rectangulos.get(i));
@@ -294,6 +334,29 @@ public class PanelDibujo extends JPanel{
 		}
 		
 	}
+	
+	//punto1: centro
+	public void dibujarInicio()
+	{
+		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
+		radio=MathAux.RADIO_INICIO;
+		//Point2D punto2 = new Point2D.Double(punto1.getX()+radio,punto1.getY()+radio);
+		//radio = Math.sqrt(Math.pow(punto2.getX()-punto1.getX(),2)+Math.pow(punto2.getY()-punto1.getY(),2));
+		
+		//Se crea un circulo ingresando el mismo ancho y largo, ademas, al desplazarlo en el radio, se logra
+		//dibujar el circulo desde el centro.
+		Inicio = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
+		//Circulo = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
+		
+		this.repaint();
+	}
+	public void dibujarFin()
+	{
+		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
+		radio=MathAux.RADIO_INICIO;
+		Fin = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
+		this.repaint();
+	}
 
 	public void redibujarLinea()
 	{
@@ -306,6 +369,17 @@ public class PanelDibujo extends JPanel{
 	{
 		Line2D lineaAux= (Line2D) Linea.clone();
 		lineas.add(lineaAux);
+		this.repaint();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addNodo()
+	{
+		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
+		radio=MathAux.RADIO_INICIO;
+		Nodo = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
+		Ellipse2D nodoAux= (Ellipse2D) Nodo.clone();
+		nodos.add(nodoAux);
 		this.repaint();
 	}
 	
@@ -326,7 +400,14 @@ public class PanelDibujo extends JPanel{
 			lineas.remove(lineas.size()-1);
 			
 		}
+		while(nodos.size()>0)
+		{
+			nodos.remove(nodos.size()-1);
+			
+		}
 		Linea = null;
+		Inicio = null;
+		Fin = null;
 		this.repaint();
 	}
 

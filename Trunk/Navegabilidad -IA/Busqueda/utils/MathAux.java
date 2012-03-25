@@ -22,6 +22,8 @@ public class MathAux {
 	public final static double Y_DEFAULT =ALTO/2;
 	public final static int CANTIDAD_PAREDES =10;
 	public final static int PASO=2;
+	public final static int RADIO_INICIO=4;
+	public final static int RADIO_FIN=6;
 	
 	public static final Double calcAngle(Point2D p0, Point2D p1)
 	{
