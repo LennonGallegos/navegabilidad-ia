@@ -45,6 +45,7 @@ import poligonos.RobotMain;
 
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.state.datastructure.Graph;
+import grafico.Grafico;
 
 public class Prueba {
 	public static	Robot robot;
