@@ -3,6 +3,7 @@ package utils;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -97,6 +98,17 @@ public class Robot {
 		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 		this.sensor = new Sensor(posicion, MathAux.NORTE);
 		
+	}
+	
+	public Robot clone()
+	{
+		Robot newRobot = new Robot((Double) this.posicion.clone());
+		newRobot.anguloActual = this.anguloActual;
+		newRobot.direccion = (java.awt.geom.Line2D.Double) this.direccion.clone();
+		newRobot.sensor = this.sensor.clone();
+		newRobot.zona = (java.awt.geom.Ellipse2D.Double) this.zona.clone();
+		
+		return newRobot;
 	}
 
 
