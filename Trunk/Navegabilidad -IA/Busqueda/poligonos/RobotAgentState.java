@@ -18,6 +18,8 @@ package poligonos;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 
 import utils.Robot;
@@ -46,9 +48,12 @@ public class RobotAgentState extends SearchBasedAgentState {
      */
     String position;
     
+    public Point2D.Double posicionXY;
+    
     public Robot robot;
-    public Double distanciaRecorrida=0D;
+    public java.lang.Double distanciaRecorrida=0D;
     public Nodo objetivo;
+    public java.lang.Double costoStep=0D;
 
     /**
      * This map has a point of the world (A, B, C, ...) as key, and a collection
@@ -62,7 +67,11 @@ public class RobotAgentState extends SearchBasedAgentState {
     public RobotAgentState clone() {
         RobotAgentState newState = new RobotAgentState();
         newState.setPosition(position);
-        newState.setDestino(objetivo);
+        newState.setDestino(objetivo.clone());
+        newState.costoStep=java.lang.Double.valueOf(costoStep);
+        newState.distanciaRecorrida=java.lang.Double.valueOf(distanciaRecorrida);
+        newState.robot=robot.clone();
+        newState.posicionXY=posicionXY;
         return newState;
     }
 
@@ -81,7 +90,6 @@ public class RobotAgentState extends SearchBasedAgentState {
         try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -136,6 +144,12 @@ public class RobotAgentState extends SearchBasedAgentState {
 
 	public void setDestino(Nodo destino) {
 		this.objetivo = destino;
+	}
+
+	public void setPosicionXY(Double pos) {
+		this.posicionXY=pos;
+		robot.setPosicion(pos);
+		
 	}
 
     

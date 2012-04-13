@@ -16,7 +16,7 @@ public class Heuristic implements IEstimatedCostFunction {
     //@Override
     public double getEstimatedCost(NTree node) {
         RobotAgentState robotState = (RobotAgentState) node.getAgentState();
-        double distanciaAlObjetivo =robotState.robot.posicion.distance(robotState.objetivo.posicion); 
+        double distanciaAlObjetivo =robotState.posicionXY.distance(robotState.objetivo.posicion); 
         return distanciaAlObjetivo;
     }
 }
