@@ -29,16 +29,19 @@ import utils.MathAux;
 	rotado el dibujo.
 */
 
+@SuppressWarnings("serial")
 public class PanelDibujo extends JPanel{
 
 	public static String NODO_OBJ="nodo";
 	public static String INICIO_OBJ="inicio";
 	public static String FIN_OBJ="fin";
 	public static String LINEA_OBJ="linea";
+	public static String UNION_OBJ="union";
 	public static Color NODO_COLOR=Color.GRAY;
 	public static Color INICIO_COLOR=Color.GREEN;
 	public static Color FIN_COLOR=Color.RED;
 	public static Color LINEA_COLOR=Color.BLACK;
+	public static Color UNION_COLOR=Color.GREEN;
 	public double xInicial;
 	public double xFinal;
 	public double yInicial;
@@ -77,21 +80,21 @@ public class PanelDibujo extends JPanel{
 	//el metodo paintComponent cuando se dibuja el frame con el editor de dibujo.
 	private String accion = "NADA";
 	private Point2D p1 = new Point2D.Double(0,0);
-	private Point2D p2,p3;
 	private Line2D Linea=null;
 	private Rectangle2D Rectangulo=null;
-	private Ellipse2D Inicio=null;
-	private Ellipse2D Fin=null;
+	public Ellipse2D inicio=null;
+	public Ellipse2D fin=null;
 	private Ellipse2D Nodo=null;
 	private Ellipse2D Circulo=null;
 	private Ellipse2D Elipse=null;
-	public ArrayList lineas = new ArrayList();
-	public ArrayList nodos = new ArrayList();
+	public ArrayList<Line2D> uniones = new ArrayList<Line2D>();
+	public ArrayList<Line2D> lineas = new ArrayList<Line2D>();
+	public ArrayList<Ellipse2D> nodos = new ArrayList<Ellipse2D>();
 	private ArrayList rectangulos = new ArrayList();
 	private ArrayList circulos = new ArrayList();
 	private ArrayList elipses = new ArrayList();
 	private double x,y,w,h,radio,d1,d2,d3;
-	private int j, cont=0;
+	private int j;
 	private double alfa,beta,angulo;
 
 /**
@@ -193,17 +196,17 @@ public class PanelDibujo extends JPanel{
 		if (Rectangulo !=null) g2.draw((Rectangle2D)Rectangulo);
 		if (Circulo != null) g2.draw((Ellipse2D)Circulo);
 		if (Elipse !=  null) g2.draw((Ellipse2D)Elipse);
-		if (Inicio !=  null) 
+		if (inicio !=  null) 
 		{
 			g2.setColor(INICIO_COLOR);
-			g2.setStroke(new BasicStroke(2.0f));
-			g2.draw((Ellipse2D)Inicio);
+			g2.setStroke(new BasicStroke(2.5f));
+			g2.draw((Ellipse2D)inicio);
 		}
-		if (Fin !=  null) 
+		if (fin !=  null) 
 		{
 			g2.setColor(FIN_COLOR);
-			g2.setStroke(new BasicStroke(2.0f));
-			g2.draw((Ellipse2D)Fin);
+			g2.setStroke(new BasicStroke(2.5f));
+			g2.draw((Ellipse2D)fin);
 		}
 		if (accion.equals("ROTAR")) g2.rotate(angulo,p1.getX(),p1.getY());	//Con este metodo se rota el dibujo.
 		
@@ -213,6 +216,13 @@ public class PanelDibujo extends JPanel{
 			g2.setStroke(new BasicStroke(1.0f));
 			for (int i = 0; i < nodos.size(); i++)
 				g2.draw((Ellipse2D)nodos.get(i));
+		}
+		if(uniones.size()>0)
+		{
+			g2.setColor(UNION_COLOR);
+			g2.setStroke(new BasicStroke(1.0f));
+			for (int i = 0; i < uniones.size(); i++)
+				g2.draw((Line2D)uniones.get(i));
 		}
 		if(lineas.size()>0)
 		{
@@ -345,7 +355,7 @@ public class PanelDibujo extends JPanel{
 		
 		//Se crea un circulo ingresando el mismo ancho y largo, ademas, al desplazarlo en el radio, se logra
 		//dibujar el circulo desde el centro.
-		Inicio = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
+		inicio = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
 		//Circulo = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
 		
 		this.repaint();
@@ -353,8 +363,8 @@ public class PanelDibujo extends JPanel{
 	public void dibujarFin()
 	{
 		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
-		radio=MathAux.RADIO_INICIO;
-		Fin = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
+		radio=MathAux.RADIO_FIN;
+		fin = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
 		this.repaint();
 	}
 
@@ -364,11 +374,16 @@ public class PanelDibujo extends JPanel{
 		this.repaint();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void addLinea()
 	{
 		Line2D lineaAux= (Line2D) Linea.clone();
 		lineas.add(lineaAux);
+		this.repaint();
+	}
+	public void addUnion()
+	{
+		Line2D lineaAux= (Line2D) Linea.clone();
+		uniones.add(lineaAux);
 		this.repaint();
 	}
 	
@@ -396,18 +411,14 @@ public class PanelDibujo extends JPanel{
 	public void limpiarPanel()
 	{
 		while(lineas.size()>0)
-		{
 			lineas.remove(lineas.size()-1);
-			
-		}
+		while(uniones.size()>0)
+			uniones.remove(uniones.size()-1);
 		while(nodos.size()>0)
-		{
 			nodos.remove(nodos.size()-1);
-			
-		}
 		Linea = null;
-		Inicio = null;
-		Fin = null;
+		inicio = null;
+		fin = null;
 		this.repaint();
 	}
 

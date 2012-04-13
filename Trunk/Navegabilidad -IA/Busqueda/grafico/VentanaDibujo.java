@@ -12,9 +12,12 @@
 package grafico;
 
 import java.awt.Color;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+
+import poligonos.Nodo;
 
 import utils.MathAux;
 
@@ -104,7 +107,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         rbtnUnion.setText("Union");buttonGroup1.add(rbtnUnion);
         rbtnUnion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	panelDibujo.objetivo=PanelDibujo.LINEA_OBJ;
+            	panelDibujo.objetivo=PanelDibujo.UNION_OBJ;
             	System.out.println("Union");
             }
         });
@@ -194,15 +197,6 @@ public class VentanaDibujo extends javax.swing.JFrame {
         });
     }
     
-    public void imprimirLineas()
-    {
-    	for (int i = 0; i < panelDibujo.lineas.size(); i++) {
-    		Line2D linea = (Line2D) panelDibujo.lineas.get(i);
-			System.out.println("P1: ("+linea.getX1()+", "+linea.getY1()+")\tP2: ("+linea.getX2()+", "+linea.getY2()+")");
-		}
-    	exportarATxt();
-    }
-    
     
     //Exporta a un .txt con la siguienta notación: "(x1,y2);(x2,y2)"
     public void exportarATxt()
@@ -216,8 +210,19 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
             for (int i = 0; i < panelDibujo.lineas.size(); i++) {
         		Line2D linea = (Line2D) panelDibujo.lineas.get(i);
-        		 pw.println("("+linea.getX1()+","+linea.getY1()+");("+linea.getX2()+","+linea.getY2()+")");
+        		pw.println("L("+linea.getX1()+","+linea.getY1()+");("+linea.getX2()+","+linea.getY2()+")");
     		}
+            for (int i = 0; i < panelDibujo.uniones.size(); i++) {
+        		Line2D linea = (Line2D) panelDibujo.uniones.get(i);
+        		pw.println("U("+linea.getX1()+","+linea.getY1()+");("+linea.getX2()+","+linea.getY2()+")");
+    		}
+            for (int i = 0; i < panelDibujo.nodos.size(); i++) {
+            	Ellipse2D nodo = (Ellipse2D) panelDibujo.nodos.get(i);
+        		pw.println("N("+nodo.getCenterX()+","+nodo.getCenterY()+")");
+    		}
+            pw.println("I("+panelDibujo.inicio.getCenterX()+","+panelDibujo.inicio.getCenterY()+")");
+            pw.println("F("+panelDibujo.fin.getCenterX()+","+panelDibujo.fin.getCenterY()+")");
+            
 
         } catch (Exception e) {
             e.printStackTrace();
