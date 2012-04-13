@@ -40,9 +40,12 @@ public class Ir extends SearchAction {
 		if (!RobotEnvironmentState.nodos.get(index).esAdyacente(agentState.getPosition()))
 			return null;
         
-		setCosto(agentState.robot.posicion);
+		setCosto(agentState.posicionXY);
+		agentState.costoStep=costo;
+		//System.out.println("Costo Step:"+agentState.costoStep);
 		agentState.distanciaRecorrida+=costo;
 		agentState.setPosition(destino.getNombre());
+		agentState.posicionXY=this.destino.posicion;
        
         return agentState;
     }
@@ -57,7 +60,8 @@ public class Ir extends SearchAction {
         this.execute((SearchBasedAgentState) ast); 
         this.setPosicionAgente(robotState);
         enviromentState.setPosicionActualRobot(robotState.getPosition());
-
+        System.out.println("Distancia parcial: "+MathAux.redondear(costo)+"\tDistancia total: " +
+        		MathAux.redondear(robotState.distanciaRecorrida));
         return enviromentState;
     }
 
@@ -71,7 +75,7 @@ public class Ir extends SearchAction {
 
     @Override
     public String toString() {
-        return "Ir a "+destino+" Distancia: "+costo;
+        return "Ir a "+destino;
     }
     
     private void setPosicionAgente(RobotAgentState robotState)
