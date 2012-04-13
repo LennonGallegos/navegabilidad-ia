@@ -39,7 +39,7 @@ public class RobotMain {
     	Long s = System.currentTimeMillis();
     	
     	RobotAgent agent = new RobotAgent();
-    	agent.getAgentState().robot.setPosicion(new Point2D.Double(20,240));
+    	agent.getAgentState().setPosicionXY(new Point2D.Double(20,240));
         RobotEnvironment environment = new RobotEnvironment();
         SearchBasedAgentSimulator simulator =
                 new SearchBasedAgentSimulator(environment, agent);
@@ -54,7 +54,7 @@ public class RobotMain {
         hilo.stop();
         System.out.println(hilo.isAlive());
         System.out.println("Tiempo transcurrido (Milisegundos): "+ (System.currentTimeMillis() - s));
-        System.out.println("Distancia recorrida: "+ agent.getAgentState().distanciaRecorrida);
+        System.out.println("Distancia recorrida: "+ MathAux.redondear(agent.getAgentState().distanciaRecorrida));
     }
 	private static void initInterfaz(RobotAgentState agentState) {
 		graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agentState.robot);

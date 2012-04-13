@@ -14,6 +14,6 @@ public class CostFunction implements IStepCostFunction {
      */
     //@Override
     public double calculateCost(NTree node) {
-        return ((RobotAgentState) node.getAgentState()).distanciaRecorrida;
+        return ((RobotAgentState) node.getAgentState()).costoStep;
     }
 }
