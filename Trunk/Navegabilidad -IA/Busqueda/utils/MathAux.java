@@ -17,6 +17,7 @@ public class MathAux {
 	public final static int ANCHO = 640;
 	public final static int ALTO = 480;
 	public final static int PRECISION =10;
+	public final static int PRECISION_REDONDEO =2;
 	private static int primeraVez=1;
 	public final static double X_DEFAULT =ANCHO/2;
 	public final static double Y_DEFAULT =ALTO/2;
@@ -111,7 +112,7 @@ public class MathAux {
     
     public static Double redondear(Double num)
     {
-    	return BigDecimal.valueOf(num).setScale(MathAux.PRECISION, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+    	return BigDecimal.valueOf(num).setScale(MathAux.PRECISION_REDONDEO, BigDecimal.ROUND_HALF_EVEN).doubleValue();
     }
 
 }

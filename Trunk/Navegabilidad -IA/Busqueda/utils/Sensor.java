@@ -34,6 +34,7 @@ public class Sensor {
 		//this.zona.height = this.zona.width = 30;
 		zona.setArcByCenter(posicion.x, posicion.y,	//zona.setArcByCenter(pos.x, (pos.y+(zona.height/2)), 
 		RADIO, zona.start, EXTENSION_ANGULAR, Arc2D.PIE);
+		this.posicion=posicion;
 		//setPosicion(posicion);
 		double restaAngulo =  (BigDecimal.valueOf(this.zona.extent/2).setScale(MathAux.PRECISION,RoundingMode.HALF_EVEN)).doubleValue();
 		switch(direccionInicial)
@@ -106,6 +107,12 @@ public class Sensor {
 	public void setExtensionAngular(double grados)
 	{
 		zona.extent = grados;
+	}
+	
+	public Sensor clone()
+	{
+		Sensor newSensor = new Sensor((Point2D.Double)this.posicion.clone(),(Arc2D.Double)this.zona.clone());
+		return newSensor;
 	}
 	
 	

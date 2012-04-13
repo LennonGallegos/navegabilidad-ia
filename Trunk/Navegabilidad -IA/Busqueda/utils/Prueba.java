@@ -65,7 +65,7 @@ public class Prueba {
 //    	robot.girarXGrados(45);
 //    	imprimirDireccion();
 //    	System.out.println(robot.direccion.getP1().distance(robot.direccion.getP2()));
-    	Nodo nodo1 = new Nodo(new Point(100,100),"Nombre");
+    	Nodo nodo1 = new Nodo(new Point2D.Double(100,100),"Nombre");
     	Grafico graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,robot,nodo1);
     	RobotEnvironment environment = new RobotEnvironment();
     	graf.setNodos(environment.getEnvironmentState().getNodos());
