@@ -15,13 +15,12 @@ public class MouseAdaptador extends MouseAdapter {
 	
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		System.out.println(arg0.getX());
 		if(arg0.getSource() instanceof PanelDibujo)
 		{
 			PanelDibujo panel = (PanelDibujo) arg0.getSource();
 			panel.xFinal=arg0.getX();
 			panel.yFinal=arg0.getY();
-			if(panel.objetivo==PanelDibujo.LINEA_OBJ)
+			if(panel.objetivo==PanelDibujo.UNION_OBJ||panel.objetivo==PanelDibujo.LINEA_OBJ)
 				panel.redibujarLinea();
 			
 		}
@@ -34,7 +33,7 @@ public class MouseAdaptador extends MouseAdapter {
 		{
 			BotonPanelDibujo btn = (BotonPanelDibujo) arg0.getSource();
 			if(btn.accion==BotonPanelDibujo.ACC_EXPORTAR)
-				btn.ventana.imprimirLineas();
+				btn.ventana.exportarATxt();
 			else
 				btn.ventana.panelDibujo.limpiarPanel();
 		}
@@ -81,6 +80,12 @@ public class MouseAdaptador extends MouseAdapter {
 					panel.yFinal=panel.yInicial;
 				panel.redibujarLinea();
 				panel.addLinea();
+
+			}
+			else if(panel.objetivo==PanelDibujo.UNION_OBJ)
+			{
+				panel.redibujarLinea();
+				panel.addUnion();			
 			}
 			else if(panel.objetivo==PanelDibujo.NODO_OBJ)
 			{
