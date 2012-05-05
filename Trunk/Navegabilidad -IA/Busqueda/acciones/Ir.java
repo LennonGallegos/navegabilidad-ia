@@ -2,6 +2,7 @@ package acciones;
 
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import poligonos.Nodo;
 import poligonos.RobotAgentState;
@@ -121,32 +122,57 @@ public class Ir extends SearchAction {
 //			Thread.sleep(1000);
 //			RobotMain.frame.repaint();
 		boolean seDesvio=false;
-		int senso=Robot.NADA;
+		ArrayList<Integer> senso;
 		while (!robotState.robot.zona.intersects(destino.zona.getBounds2D()))
 		{	
-			Thread.sleep(150);
+			Thread.sleep(250);
 			senso=robotState.robot.sensar(environmentState);
-			if(senso==Robot.IZQUIERDA)
+			
+			if(senso.size()==0) //Si no se percibio nada
 			{
-				robotState.robot.girarXGrados(-5);
-				seDesvio=true;
-			}
-			if(senso==Robot.DERECHA)
-			{
-				robotState.robot.girarXGrados(5);
-				seDesvio=true;
-			}
-			if(senso==Robot.FRENTE)
-			{
-				robotState.robot.girarXGrados(5);
-				seDesvio=true;
-			}
-			else if(senso==Robot.NADA && seDesvio)
-			{
+				if(seDesvio)
+				{
 				reOrientar(robotState.robot, posNueva);
 				seDesvio=false;
-			}
+				}
 				robotState.robot.avanzar(environmentState);
+			}
+			else //Si se percibio algo
+			{
+				if(senso.contains(Robot.FRENTE) )
+				{
+					if(!senso.contains(Robot.IZQUIERDA))//Si no tengo algo a la izquierda giro hacia alli
+						robotState.robot.girarXGrados(MathAux.GIRO);
+					else if(!senso.contains(Robot.DERECHA))//Si no tengo algo a la derecha giro hacia alli
+						robotState.robot.girarXGrados(-MathAux.GIRO);
+					else
+					{
+						robotState.robot.girarXGrados(-MathAux.GIRO);
+						continue;
+					}
+					//TODO: Falta hacer el comportamiento para el caso en que tenga obstaculos a ambos lados.
+					
+					seDesvio=true;
+					robotState.robot.avanzar(environmentState);
+					continue;
+				}
+				
+				if(senso.contains(Robot.IZQUIERDA) && !senso.contains(Robot.DERECHA))
+				{
+					robotState.robot.girarXGrados(-MathAux.GIRO);
+					seDesvio=true;
+					robotState.robot.avanzar(environmentState);
+					continue;
+				}
+				
+				if(senso.contains(Robot.DERECHA) && !senso.contains(Robot.IZQUIERDA))
+				{
+					robotState.robot.girarXGrados(MathAux.GIRO);
+					seDesvio=true;
+					robotState.robot.avanzar(environmentState);
+					continue;
+				}
+			}
 		}
     	 robotState.robot.setPosicion(posNueva);
 		 } catch (InterruptedException e) {

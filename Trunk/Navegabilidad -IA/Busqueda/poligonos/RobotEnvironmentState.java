@@ -200,7 +200,7 @@ public class RobotEnvironmentState extends EnvironmentState {
 		{
 			obstaculos = new ArrayList<Shape>();
 //			for (int i = 0; i < MathAux.CANTIDAD_PAREDES; i++) {
-			obstaculos.add(new Ellipse2D.Double(30,230,20,20));
+			obstaculos.add(new Ellipse2D.Double(30,240,20,20));
 			obstaculos.add(new Rectangle.Double(50,280,40,40));
 			obstaculos.add(new Line2D.Double(300,270,300,330));
 			

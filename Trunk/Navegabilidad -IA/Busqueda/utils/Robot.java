@@ -9,6 +9,7 @@ import java.awt.geom.RectangularShape;
 import java.awt.geom.Point2D.Double;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
 import poligonos.RobotEnvironmentState;
 
@@ -132,26 +133,27 @@ public class Robot {
 		return newRobot;
 	}
 	
-	public int sensar(RobotEnvironmentState environment)
+	public ArrayList<Integer> sensar(RobotEnvironmentState environment)
 	{//TODO: Estaria bueno que devuelve valores del -10 al 10 de acuerdo al grado de cercania del obstaculo al robot
+		ArrayList<Integer> result=new ArrayList<Integer>();
 		for (Shape obstaculo : environment.obstaculos) {
 			if(sensor.zonaIzq.intersects( obstaculo.getBounds2D()))
-				return IZQUIERDA;
+				result.add(IZQUIERDA);
 			if(sensor.zonaFrontal.intersects(obstaculo.getBounds2D()))
-				return FRENTE;
+				result.add(FRENTE);
 			if(sensor.zonaDer.intersects(obstaculo.getBounds2D()))
-				return DERECHA;
+				result.add(DERECHA);
 			if(obstaculo instanceof Line2D)
 			{
 				if(sensor.zonaIzq.getBounds2D().intersectsLine((Line2D) obstaculo))
-					return IZQUIERDA;
+					result.add(IZQUIERDA);
 				if(sensor.zonaFrontal.getBounds2D().intersectsLine((Line2D) obstaculo))
-					return FRENTE;
+					result.add(FRENTE);
 				if(sensor.zonaDer.getBounds2D().intersectsLine((Line2D) obstaculo))
-					return DERECHA;
+					result.add(DERECHA);
 			}
 		}
-		return NADA;
+		return result;
 	}
 
 

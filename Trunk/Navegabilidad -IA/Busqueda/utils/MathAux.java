@@ -25,6 +25,7 @@ public class MathAux {
 	public final static int PASO=2;
 	public final static int RADIO_INICIO=4;
 	public final static int RADIO_FIN=6;
+	public final static int GIRO=5;
 	
 	public static final Double calcAngle(Point2D p0, Point2D p1)
 	{
