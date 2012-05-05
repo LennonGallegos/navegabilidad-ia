@@ -18,12 +18,17 @@ package poligonos;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.RectangularShape;
 import java.io.File;
 import java.util.ArrayList;
 
 import utils.MathAux;
+import utils.Robot;
 
 import frsf.cidisi.faia.state.EnvironmentState;
 
@@ -94,6 +99,7 @@ public class RobotEnvironmentState extends EnvironmentState {
         };
     public static ArrayList<Nodo> nodos;
     public static ArrayList<Line2D.Double> paredes;
+    public static ArrayList<Shape> obstaculos;
     private String posicionActualRobot;
     private ArrayList<String> nodosAdyacentesActuales;
 
@@ -119,6 +125,7 @@ public class RobotEnvironmentState extends EnvironmentState {
          */
     	initNodos();
     	initParedes();
+    	initObstaculos();
     	posicionActualRobot = X;
     }
     
@@ -182,6 +189,21 @@ public class RobotEnvironmentState extends EnvironmentState {
 			paredes.add(new Line2D.Double(nodos.get(H_INDEX).posicion,nodos.get(G_INDEX).posicion));
 			paredes.add(new Line2D.Double(nodos.get(H_INDEX).posicion,nodos.get(I_INDEX).posicion));
 			paredes.add(new Line2D.Double(nodos.get(I_INDEX).posicion,nodos.get(G_INDEX).posicion));
+		//}
+		}
+		
+	}
+	
+	public static void initObstaculos(){
+		
+		if(obstaculos==null)
+		{
+			obstaculos = new ArrayList<Shape>();
+//			for (int i = 0; i < MathAux.CANTIDAD_PAREDES; i++) {
+			obstaculos.add(new Ellipse2D.Double(30,230,20,20));
+			obstaculos.add(new Rectangle.Double(50,280,40,40));
+			obstaculos.add(new Line2D.Double(300,270,300,330));
+			
 		//}
 		}
 		
@@ -257,6 +279,23 @@ public class RobotEnvironmentState extends EnvironmentState {
 		}
 		
 		return adyacentes;
+	}
+	
+	public ArrayList<String> getPercepcionDeSensor(RobotAgentState agentState) {
+		
+		for (Shape obstaculo : obstaculos) {
+			agentState.robot.zona.intersects(obstaculo.getBounds2D());
+		}
+		
+		//TODO: Capaz que da para separar el sensor en 3 zonas. Izq, Frente, Der
+		/**Debería retornar un valor del -10 al 10. Siendo:
+		 *			-10	: Hay un objeto bien a la izquierda del robot
+		 *			 0 	: El objeto está frente al robot
+		 *			 10	: Hay un objeto bien a la derecha del robot
+		 */
+													
+													
+		return null;
 	}
 
 	public String getPosicionActualRobot() {
