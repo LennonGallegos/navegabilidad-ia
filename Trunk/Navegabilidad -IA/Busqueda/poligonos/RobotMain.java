@@ -45,12 +45,10 @@ public class RobotMain {
                 new SearchBasedAgentSimulator(environment, agent);
         
         initInterfaz(agent.getAgentState());
-        frame.repaint();
         Thread.sleep(300);
         hilo.start();
         simulator.start();
         Thread.sleep(300);
-        frame.repaint();
         hilo.stop();
         System.out.println(hilo.isAlive());
         System.out.println("Tiempo transcurrido (Milisegundos): "+ (System.currentTimeMillis() - s));
@@ -60,6 +58,7 @@ public class RobotMain {
 		graf = new Grafico(MathAux.ANCHO,MathAux.ALTO,Color.WHITE,agentState.robot);
         graf.setNodos(RobotEnvironmentState.nodos);
         graf.setParedes(RobotEnvironmentState.paredes);
+        graf.setObstaculos(RobotEnvironmentState.obstaculos);
         frame = new VentanaSimulacion("Prueba",graf);
     	frame.setVisible(true);
 		
@@ -73,10 +72,8 @@ public class RobotMain {
 			try {
 				Thread.sleep(100);
 				frame.repaint();
-//				System.out.println("REPAINT");
 				i++;
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

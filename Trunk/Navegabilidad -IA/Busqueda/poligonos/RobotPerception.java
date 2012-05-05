@@ -64,8 +64,8 @@ public class RobotPerception extends Perception {
     public void initPerception(Agent agent, Environment environment) {
     	RobotAgent robotAgent = (RobotAgent) agent;
         RobotEnvironment robotEnvironment = (RobotEnvironment) environment;
-        RobotEnvironmentState environmentState =
-                robotEnvironment.getEnvironmentState();
+//        RobotEnvironmentState environmentState =
+//                robotEnvironment.getEnvironmentState();
         
         posActual= robotAgent.getAgentState().position;
         
