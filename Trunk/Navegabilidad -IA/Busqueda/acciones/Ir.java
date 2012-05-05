@@ -8,6 +8,7 @@ import poligonos.RobotAgentState;
 import poligonos.RobotEnvironmentState;
 import poligonos.RobotMain;
 import utils.MathAux;
+import utils.Robot;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -55,14 +56,14 @@ public class Ir extends SearchAction {
      */
     @Override
     public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-    	RobotEnvironmentState enviromentState = (RobotEnvironmentState) est;
+    	RobotEnvironmentState environmentState = (RobotEnvironmentState) est;
         RobotAgentState robotState = (RobotAgentState) ast;
         this.execute((SearchBasedAgentState) ast); 
-        this.setPosicionAgente(robotState);
-        enviromentState.setPosicionActualRobot(robotState.getPosition());
+        this.setPosicionAgente(robotState,environmentState);
+        environmentState.setPosicionActualRobot(robotState.getPosition());
         System.out.println("Distancia parcial: "+MathAux.redondear(costo)+"\tDistancia total: " +
         		MathAux.redondear(robotState.distanciaRecorrida));
-        return enviromentState;
+        return environmentState;
     }
 
     @Override
@@ -78,7 +79,7 @@ public class Ir extends SearchAction {
         return "Ir a "+destino;
     }
     
-    private void setPosicionAgente(RobotAgentState robotState)
+    private void setPosicionAgente(RobotAgentState robotState, RobotEnvironmentState environmentState)
     {
     	Point2D.Double posNueva = new Point2D.Double();
     	 if(robotState.getPosition()=="A")
@@ -116,18 +117,47 @@ public class Ir extends SearchAction {
     	 if(robotState.getPosition()!="X")
     		 robotState.robot.girarXGrados(-anguloRot);
 		 try {
-			 RobotMain.frame.repaint();
-			Thread.sleep(1000);
-			RobotMain.frame.repaint();
-		
+//			 RobotMain.frame.repaint();
+//			Thread.sleep(1000);
+//			RobotMain.frame.repaint();
+		boolean seDesvio=false;
+		int senso=Robot.NADA;
 		while (!robotState.robot.zona.intersects(destino.zona.getBounds2D()))
-		{Thread.sleep(100); 		
-		robotState.robot.avanzar();
+		{	
+			Thread.sleep(150);
+			senso=robotState.robot.sensar(environmentState);
+			if(senso==Robot.IZQUIERDA)
+			{
+				robotState.robot.girarXGrados(-5);
+				seDesvio=true;
+			}
+			if(senso==Robot.DERECHA)
+			{
+				robotState.robot.girarXGrados(5);
+				seDesvio=true;
+			}
+			if(senso==Robot.FRENTE)
+			{
+				robotState.robot.girarXGrados(5);
+				seDesvio=true;
+			}
+			else if(senso==Robot.NADA && seDesvio)
+			{
+				reOrientar(robotState.robot, posNueva);
+				seDesvio=false;
+			}
+				robotState.robot.avanzar(environmentState);
 		}
     	 robotState.robot.setPosicion(posNueva);
 		 } catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+    }
+    
+    public void reOrientar(Robot robot,Point2D.Double posDestino){
+    	double anguloRot=MathAux.getAnguloRotacion(robot.direccion.getP1(), robot.direccion.getP2(), posDestino);
+   	 	//if(robotState.getPosition()!="X")
+   	 		robot.girarXGrados(-anguloRot);
     }
 }
