@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Grafico extends JPanel {
 	private Nodo destino=null;
 	private ArrayList<Nodo> nodos=null;
 	private ArrayList<Line2D.Double> paredes;
+	private ArrayList<Shape> obstaculos;
 	public Grafico(int a, int b, Color c,Robot age) {
 	
 		setSize(a,b);
@@ -62,6 +64,15 @@ public class Grafico extends JPanel {
 			g2d.setStroke(new BasicStroke(3.0f)); //Ancho de borde
 			g2d.draw(agente.zona);
 			//g2d.draw(new Ellipse2D.Double(agente.posicion.x-5,agente.posicion.y-5,10,10));
+			
+			g2d.setStroke(new BasicStroke(1.0f)); //Ancho de borde
+			g2d.setColor(Color.GREEN);
+			g2d.draw(agente.sensor.zonaIzq);
+			g2d.setColor(Color.RED);
+			g2d.draw(agente.sensor.zonaFrontal);
+			g2d.setColor(Color.GRAY);
+			g2d.draw(agente.sensor.zonaDer);
+			
 			g2d.setStroke(new BasicStroke(2.0f)); //Ancho de borde
 			}
 		if(destino != null)
@@ -94,6 +105,14 @@ public class Grafico extends JPanel {
 				g2d.draw(pared);
 			}
 		}
+		
+		if(obstaculos != null && obstaculos.size()>0)
+		{
+			g2d.setColor(Color.GREEN);
+			for (Shape obs: obstaculos) {
+				g2d.draw(obs);
+			}
+		}
 	}
 
 	public Nodo getDestino() {
@@ -118,6 +137,14 @@ public class Grafico extends JPanel {
 
 	public void setParedes(ArrayList<Line2D.Double> paredes) {
 		this.paredes = paredes;
+	}
+
+	public ArrayList<Shape> getObstaculos() {
+		return obstaculos;
+	}
+
+	public void setObstaculos(ArrayList<Shape> obstaculos) {
+		this.obstaculos = obstaculos;
 	}
 	
 	
