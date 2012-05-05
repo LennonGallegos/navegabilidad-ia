@@ -1,11 +1,16 @@
 package utils;
 
+import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 import java.awt.geom.Point2D.Double;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import poligonos.RobotEnvironmentState;
 
 public class Robot {
 	
@@ -14,6 +19,10 @@ public class Robot {
 	public Point2D.Double posicion;
 	public Ellipse2D.Double zona;
 	public double anguloActual;
+	public static int IZQUIERDA=-1;
+	public static int FRENTE=0;
+	public static int DERECHA=1;
+	public static int NADA=555;
 	
 
 
@@ -73,11 +82,23 @@ public class Robot {
 		
 	}
 	
-	public void avanzar()
+	public void avanzar()//Avanza sin percepciones de los sensores
 	{
 		this.posicion=MathAux.avanzarEnLineaRecta(direccion,posicion, MathAux.PASO);
 		this.sensor.setPosicion(this.posicion);
 		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
+		
+	}
+	
+	public void avanzar(RobotEnvironmentState environmentState)//Avanza percibiendo
+	{
+//		int senso=sensar(environmentState);
+//		if(senso==DERECHA)
+//			girarXGrados(10);
+		this.posicion=MathAux.avanzarEnLineaRecta(direccion,posicion, MathAux.PASO);
+		this.sensor.setPosicion(this.posicion);
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
+//		System.out.println(senso);
 		
 	}
 	
@@ -109,6 +130,28 @@ public class Robot {
 		newRobot.zona = (java.awt.geom.Ellipse2D.Double) this.zona.clone();
 		
 		return newRobot;
+	}
+	
+	public int sensar(RobotEnvironmentState environment)
+	{//TODO: Estaria bueno que devuelve valores del -10 al 10 de acuerdo al grado de cercania del obstaculo al robot
+		for (Shape obstaculo : environment.obstaculos) {
+			if(sensor.zonaIzq.intersects( obstaculo.getBounds2D()))
+				return IZQUIERDA;
+			if(sensor.zonaFrontal.intersects(obstaculo.getBounds2D()))
+				return FRENTE;
+			if(sensor.zonaDer.intersects(obstaculo.getBounds2D()))
+				return DERECHA;
+			if(obstaculo instanceof Line2D)
+			{
+				if(sensor.zonaIzq.getBounds2D().intersectsLine((Line2D) obstaculo))
+					return IZQUIERDA;
+				if(sensor.zonaFrontal.getBounds2D().intersectsLine((Line2D) obstaculo))
+					return FRENTE;
+				if(sensor.zonaDer.getBounds2D().intersectsLine((Line2D) obstaculo))
+					return DERECHA;
+			}
+		}
+		return NADA;
 	}
 
 
