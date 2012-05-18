@@ -17,15 +17,15 @@ public class MathAux {
 	public final static int ANCHO = 640;
 	public final static int ALTO = 480;
 	public final static int PRECISION =10;
-	public final static int PRECISION_REDONDEO =2;
+	public final static int PRECISION_REDONDEO =10;
 	private static int primeraVez=1;
 	public final static double X_DEFAULT =ANCHO/2;
 	public final static double Y_DEFAULT =ALTO/2;
 	public final static int CANTIDAD_PAREDES =10;
 	public final static int PASO=2;
-	public final static int RADIO_INICIO=4;
-	public final static int RADIO_FIN=6;
-	public final static int GIRO=5;
+	public final static int RADIO_NODO_INICIO=4;
+	public final static int RADIO_NODO_FIN=6;
+	public final static int GIRO=15;
 	
 	public static final Double calcAngle(Point2D p0, Point2D p1)
 	{
@@ -49,13 +49,15 @@ public class MathAux {
      * @param punto3 que reemplazará al punto2 en el nuevo vector
      */
     public static double getAnguloRotacion(Point2D punto1, Point2D punto2, Point2D punto3) {
-    	double alfa = Math.atan((punto2.getY()-punto1.getY())/(punto2.getX()-punto1.getX()));
-    	double beta = Math.atan((punto3.getY()-punto1.getY())/(punto3.getX()-punto1.getX()));
-		double angulo = beta - alfa;
-
+    	Double alfa = Math.atan((punto2.getY()-punto1.getY())/(punto2.getX()-punto1.getX()));
+    	Double beta = Math.atan((punto3.getY()-punto1.getY())/(punto3.getX()-punto1.getX()));
+    	Double angulo = beta - alfa;
+		
 		if ((punto3.getX()-punto1.getX()) < 0) {
 			angulo = Math.PI+angulo;
 		}
+		if(punto2.getX()-punto1.getX()<0)
+			angulo=angulo+135;
 		return redondear(Math.toDegrees(angulo));
 	}
     
@@ -67,8 +69,8 @@ public class MathAux {
     public static Point2D.Double avanzarEnLineaRecta(Line2D.Double direccion, Point2D.Double pos, int step)
     {
     	double x1 = direccion.x1;
-    	double x2 = direccion.x2;
     	double y1 = direccion.y1;
+    	double x2 = direccion.x2;
     	double y2 = direccion.y2;
     	double x = 0;
     	double y = 0;
@@ -101,12 +103,12 @@ public class MathAux {
     		y = ((y2-y1)/(x2-x1))*(x-x1)+y1;
 		}
     	if(primeraVez==1)
-    		{
-    			primeraVez=0;
-    			Point2D.Double dirPuntoFinal = avanzarEnLineaRecta(direccion, new Point2D.Double(x,y), 30);
-    			direccion.x1=x; direccion.y1=y; direccion.x2=dirPuntoFinal.x; direccion.y2=dirPuntoFinal.y;
-    			primeraVez=1;
-    		}
+		{
+			primeraVez=0;
+			Point2D.Double dirPuntoFinal = avanzarEnLineaRecta(direccion, new Point2D.Double(x,y), (int) Sensor.RADIO);
+			direccion.x1=x; direccion.y1=y; direccion.x2=dirPuntoFinal.x; direccion.y2=dirPuntoFinal.y;
+			primeraVez=1;
+		}
 		
     	return new Point2D.Double(x,y);
     }
