@@ -349,7 +349,7 @@ public class PanelDibujo extends JPanel{
 	public void dibujarInicio()
 	{
 		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
-		radio=MathAux.RADIO_INICIO;
+		radio=MathAux.RADIO_NODO_INICIO;
 		//Point2D punto2 = new Point2D.Double(punto1.getX()+radio,punto1.getY()+radio);
 		//radio = Math.sqrt(Math.pow(punto2.getX()-punto1.getX(),2)+Math.pow(punto2.getY()-punto1.getY(),2));
 		
@@ -363,7 +363,7 @@ public class PanelDibujo extends JPanel{
 	public void dibujarFin()
 	{
 		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
-		radio=MathAux.RADIO_FIN;
+		radio=MathAux.RADIO_NODO_FIN;
 		fin = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
 		this.repaint();
 	}
@@ -391,7 +391,7 @@ public class PanelDibujo extends JPanel{
 	public void addNodo()
 	{
 		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
-		radio=MathAux.RADIO_INICIO;
+		radio=MathAux.RADIO_NODO_INICIO;
 		Nodo = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
 		Ellipse2D nodoAux= (Ellipse2D) Nodo.clone();
 		nodos.add(nodoAux);

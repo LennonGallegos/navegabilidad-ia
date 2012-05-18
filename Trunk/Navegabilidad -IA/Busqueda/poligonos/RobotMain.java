@@ -39,7 +39,7 @@ public class RobotMain {
     	Long s = System.currentTimeMillis();
     	
     	RobotAgent agent = new RobotAgent();
-    	agent.getAgentState().setPosicionXY(new Point2D.Double(20,240));
+    	agent.getAgentState().setPosicionXY(RobotEnvironmentState.POSICIONES[RobotEnvironmentState.X_INDEX]);
         RobotEnvironment environment = new RobotEnvironment();
         SearchBasedAgentSimulator simulator =
                 new SearchBasedAgentSimulator(environment, agent);
@@ -67,7 +67,7 @@ public class RobotMain {
 	static Thread hilo = new Thread(new Runnable() {
 	public void run() {
 		int i = 0;
-		while(i<2000)
+		while(i<20000)
 		{
 			try {
 				Thread.sleep(100);

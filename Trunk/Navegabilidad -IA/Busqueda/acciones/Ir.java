@@ -118,15 +118,14 @@ public class Ir extends SearchAction {
     	 if(robotState.getPosition()!="X")
     		 robotState.robot.girarXGrados(-anguloRot);
 		 try {
-//			 RobotMain.frame.repaint();
-//			Thread.sleep(1000);
-//			RobotMain.frame.repaint();
 		boolean seDesvio=false;
 		ArrayList<Integer> senso;
-		while (!robotState.robot.zona.intersects(destino.zona.getBounds2D()))
+		while (robotState.robot.posicion.distance(destino.posicion)>1)//(!robotState.robot.zona.intersects(destino.zona.getBounds2D()))
 		{	
-			Thread.sleep(250);
+			Thread.sleep(100);
 			senso=robotState.robot.sensar(environmentState);
+			Point2D p1=robotState.robot.posicion;
+			Point2D p2;
 			
 			if(senso.size()==0) //Si no se percibio nada
 			{
@@ -135,24 +134,33 @@ public class Ir extends SearchAction {
 				reOrientar(robotState.robot, posNueva);
 				seDesvio=false;
 				}
+				//Por ahora tengo que reorientarlo todo el tiempo pq si no se pierde.
+				reOrientar(robotState.robot, posNueva);
 				robotState.robot.avanzar(environmentState);
 			}
 			else //Si se percibio algo
 			{
+//				if(senso.contains(Robot.TOCANDO) )
+//				{
+//					while(senso.contains(Robot.TOCANDO))
+//					{
+//						robotState.robot.retroceder(environmentState);
+//						senso=robotState.robot.sensar(environmentState);						
+//					}
+//				}
 				if(senso.contains(Robot.FRENTE) )
 				{
-					if(!senso.contains(Robot.IZQUIERDA))//Si no tengo algo a la izquierda giro hacia alli
+					seDesvio=true;
+					if(!senso.contains(Robot.IZQUIERDA))	//Si no tengo algo a la izquierda giro hacia alli
 						robotState.robot.girarXGrados(MathAux.GIRO);
-					else if(!senso.contains(Robot.DERECHA))//Si no tengo algo a la derecha giro hacia alli
+					else if(!senso.contains(Robot.DERECHA))	//Si no tengo algo a la derecha giro hacia alli
 						robotState.robot.girarXGrados(-MathAux.GIRO);
-					else
+					else									//De lo contrario giro, pero sin avanzar
 					{
 						robotState.robot.girarXGrados(-MathAux.GIRO);
 						continue;
 					}
-					//TODO: Falta hacer el comportamiento para el caso en que tenga obstaculos a ambos lados.
 					
-					seDesvio=true;
 					robotState.robot.avanzar(environmentState);
 					continue;
 				}
@@ -162,6 +170,9 @@ public class Ir extends SearchAction {
 					robotState.robot.girarXGrados(-MathAux.GIRO);
 					seDesvio=true;
 					robotState.robot.avanzar(environmentState);
+					p2=robotState.robot.posicion;
+					if(p1.distance(p2)>5)
+						System.out.println("Se paso");
 					continue;
 				}
 				
@@ -170,9 +181,19 @@ public class Ir extends SearchAction {
 					robotState.robot.girarXGrados(MathAux.GIRO);
 					seDesvio=true;
 					robotState.robot.avanzar(environmentState);
+					p2=robotState.robot.posicion;
+					if(p1.distance(p2)>5)
+						System.out.println("Se paso");
+					continue;
+				}
+				
+				if(senso.contains(Robot.DERECHA) && senso.contains(Robot.IZQUIERDA))
+				{
+					robotState.robot.avanzar(environmentState);
 					continue;
 				}
 			}
+			
 		}
     	 robotState.robot.setPosicion(posNueva);
 		 } catch (InterruptedException e) {

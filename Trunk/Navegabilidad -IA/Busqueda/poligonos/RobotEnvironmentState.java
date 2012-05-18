@@ -93,7 +93,8 @@ public class RobotEnvironmentState extends EnvironmentState {
         new Point2D.Double(MathAux.ANCHO/2+200,MathAux.ALTO/2+50),//f
         new Point2D.Double(MathAux.ANCHO/2+225,MathAux.ALTO/2-75),//g
         new Point2D.Double(MathAux.ANCHO/2+225,MathAux.ALTO/2+75),//h
-        new Point2D.Double(620,480-50),//i 
+        new Point2D.Double(620,480-50),//i
+        //new Point2D.Double(300,480-50),//i prueba 
         //new Point2D.Double(620,240),//i
         new Point2D.Double(20,240),//x
         };
