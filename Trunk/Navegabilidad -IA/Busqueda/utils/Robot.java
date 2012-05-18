@@ -15,6 +15,7 @@ import poligonos.RobotEnvironmentState;
 
 public class Robot {
 	
+	
 	public Sensor sensor;
 	public Line2D.Double direccion;
 	public Point2D.Double posicion;
@@ -23,7 +24,8 @@ public class Robot {
 	public static int IZQUIERDA=-1;
 	public static int FRENTE=0;
 	public static int DERECHA=1;
-	public static int NADA=555;
+	public static final int TOCANDO = 555;
+	public ArrayList<Integer> ultimasAcciones = new ArrayList<Integer>();
 	
 
 
@@ -44,7 +46,7 @@ public class Robot {
 		this.posicion = posicion;
 		//Empieza con una dirección "Norte".
 		this.direccion = new Line2D.Double(posicion, 
-				new Point2D.Double(posicion.x,posicion.y-60));
+				new Point2D.Double(posicion.x,posicion.y-Sensor.RADIO));
 		this.anguloActual = 90;
 		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 	}
@@ -56,7 +58,7 @@ public class Robot {
 		this.sensor = new Sensor(this.posicion, MathAux.NORTE);
 		//Empieza con una dirección "Norte".
 		this.direccion = new Line2D.Double(this.posicion, 
-				new Point2D.Double(this.posicion.x,this.posicion.y-60)); //60 es la longitud de la linea direccional (irrelevante)
+				new Point2D.Double(this.posicion.x,this.posicion.y-Sensor.RADIO)); //60 es la longitud de la linea direccional (irrelevante)
 		this.anguloActual = 90;
 		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
 	}
@@ -79,6 +81,13 @@ public class Robot {
 				)).setScale(MathAux.PRECISION,RoundingMode.HALF_EVEN).doubleValue();
 
 		this.direccion = new Line2D.Double(direccion.x1,direccion.y1,xFinal,yFinal);
+//		if(direccion.y2-direccion.y1>30)
+//		{
+//    		double yAux=direccion.y2-30;
+//    		double xAux = ((direccion.x2-direccion.x1)/(direccion.y2-direccion.y1))*(yAux-direccion.y1)+direccion.x1;
+//    		this.direccion.x2=xAux;this.direccion.y2=yAux;
+//		}
+		
 		this.sensor.girarXGrados(giro);
 		
 	}
@@ -103,13 +112,21 @@ public class Robot {
 		
 	}
 	
+	public void retroceder(RobotEnvironmentState environmentState)//Avanza percibiendo
+	{//TODO: No anda
+		this.posicion=MathAux.avanzarEnLineaRecta(direccion,posicion, -MathAux.PASO);
+		this.sensor.setPosicion(this.posicion);
+		this.zona =new Ellipse2D.Double(posicion.x-5,posicion.y-5,10,10);
+		
+	}
+	
 	public void setOrientacion(int orientacion)
 	{
 		if(orientacion == MathAux.NORTE)
 		{
 			this.sensor = new Sensor(posicion, MathAux.NORTE);
 			this.direccion = new Line2D.Double(posicion, 
-					new Point2D.Double(posicion.x,posicion.y-60));
+					new Point2D.Double(posicion.x,posicion.y-Sensor.RADIO));
 			this.anguloActual = 90;
 		}
 	}
@@ -137,6 +154,9 @@ public class Robot {
 	{//TODO: Estaria bueno que devuelve valores del -10 al 10 de acuerdo al grado de cercania del obstaculo al robot
 		ArrayList<Integer> result=new ArrayList<Integer>();
 		for (Shape obstaculo : environment.obstaculos) {
+//			if(zona.intersects(obstaculo.getBounds2D()))//Si el robot ya esta tocando el obstaculo
+//				result.add(TOCANDO);
+
 			if(sensor.zonaIzq.intersects( obstaculo.getBounds2D()))
 				result.add(IZQUIERDA);
 			if(sensor.zonaFrontal.intersects(obstaculo.getBounds2D()))
