@@ -13,8 +13,8 @@ public class Sensor {
 	
 	public Point2D.Double posicion;
 	public Arc2D.Double zona;
-	private static double RADIO = 30;
-	private static double EXTENSION_ANGULAR = 45;
+	public static double RADIO = 30;
+	private static double EXTENSION_ANGULAR = 60;
 	private static double EXTENSION_ANGULAR_PARCIAL = EXTENSION_ANGULAR/3;
 	public Arc2D.Double zonaIzq,zonaFrontal,zonaDer;
 	
