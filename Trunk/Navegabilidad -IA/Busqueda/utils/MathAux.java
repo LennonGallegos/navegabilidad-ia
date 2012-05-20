@@ -22,7 +22,7 @@ public class MathAux {
 	public final static double X_DEFAULT =ANCHO/2;
 	public final static double Y_DEFAULT =ALTO/2;
 	public final static int CANTIDAD_PAREDES =10;
-	public final static int PASO=2;
+	public final static double PASO=0.1;
 	public final static int RADIO_NODO_INICIO=4;
 	public final static int RADIO_NODO_FIN=6;
 	public final static int GIRO=15;
@@ -66,7 +66,7 @@ public class MathAux {
      * @param step Cuanto avanzará
      * @return
      */
-    public static Point2D.Double avanzarEnLineaRecta(Line2D.Double direccion, Point2D.Double pos, int step)
+    public static Point2D.Double avanzarEnLineaRecta(Line2D.Double direccion, Point2D.Double pos, double step)
     {
     	double x1 = direccion.x1;
     	double y1 = direccion.y1;
@@ -83,25 +83,23 @@ public class MathAux {
     		else if(y2<y1) //Hacia el Norte
     				y = pos.y-step;
     			
-    		
 		}
     	else if((y2-y1)==0)
-		{
-			y = pos.y;
-			if(x2>x1) //Hacia la derecha 
-    			x = pos.x+step;
-    		else if(x2<x1) //Hacia la izquierda
-    				x = pos.x-step;
-		}
-			
-    	else
-		{
-    		if(x2>x1)
-    			x = pos.x+step;
-    		else
-    			x = pos.x-step;	
-    		y = ((y2-y1)/(x2-x1))*(x-x1)+y1;
-		}
+			{
+				y = pos.y;
+				if(x2>x1) //Hacia la derecha 
+	    			x = pos.x+step;
+	    		else if(x2<x1) //Hacia la izquierda
+	    				x = pos.x-step;
+			}
+	    	else
+			{
+	    		if(x2>x1)
+	    			x = pos.x+step;
+	    		else
+	    			x = pos.x-step;	
+	    		y = ((y2-y1)/(x2-x1))*(x-x1)+y1;
+			}
     	if(primeraVez==1)
 		{
 			primeraVez=0;
