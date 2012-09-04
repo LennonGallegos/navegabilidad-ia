@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import poligonos.Nodo;
 import poligonos.RobotAgentState;
 import poligonos.RobotEnvironmentState;
-import poligonos.RobotMain;
 import utils.MathAux;
 import utils.Robot;
 import frsf.cidisi.faia.agent.search.SearchAction;
@@ -122,7 +121,7 @@ public class Ir extends SearchAction {
 		ArrayList<Integer> senso;
 		while (robotState.robot.posicion.distance(destino.posicion)>1)//(!robotState.robot.zona.intersects(destino.zona.getBounds2D()))
 		{	
-			Thread.sleep(100);
+			Thread.sleep(10);
 			senso=robotState.robot.sensar(environmentState);
 			Point2D p1=robotState.robot.posicion;
 			Point2D p2;
