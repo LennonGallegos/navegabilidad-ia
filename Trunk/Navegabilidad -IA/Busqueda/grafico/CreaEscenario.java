@@ -18,30 +18,15 @@ package grafico;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.awt.Color;
-import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
-import javax.print.DocFlavor.READER;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 
 import utils.Robot;
-
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
-import frsf.cidisi.faia.util.FileOperations;
 
-public class CopyOfPrueba {
+public class CreaEscenario {
 	public static	Robot robot;
     public static void main(String[] args) throws PrologConnectorException, InterruptedException, IOException {
     	

@@ -220,8 +220,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
             	Ellipse2D nodo = (Ellipse2D) panelDibujo.nodos.get(i);
         		pw.println("N("+nodo.getCenterX()+","+nodo.getCenterY()+")");
     		}
-            pw.println("I("+panelDibujo.inicio.getCenterX()+","+panelDibujo.inicio.getCenterY()+")");
-            pw.println("F("+panelDibujo.fin.getCenterX()+","+panelDibujo.fin.getCenterY()+")");
+            if(panelDibujo.inicio!=null)
+            	pw.println("I("+panelDibujo.inicio.getCenterX()+","+panelDibujo.inicio.getCenterY()+")");
+            if(panelDibujo.fin!=null)
+            	pw.println("F("+panelDibujo.fin.getCenterX()+","+panelDibujo.fin.getCenterY()+")");
             
 
         } catch (Exception e) {
