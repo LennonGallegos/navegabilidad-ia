@@ -5,7 +5,7 @@ public class Location {
 	public static final String RED="red";
 	
 	static String[] world= {GREEN,RED,RED,GREEN,GREEN};
-	static double [] probability={0.2,0.2,0.2,0.2,0.2};
+	static double [] probability={0.2,0.2,0.2,0.2,0.2};//Belief
 	static double [] probabilitySimple={0,1,0,0,0};
 	static double pHit=0.6;//Probabilidad de que haya leido bien el sensor
 	static double pMiss=0.2;//Probabilidad de que el sensor haya leido mal
@@ -26,7 +26,7 @@ public class Location {
 
 		System.out.print("\n[ ");
 		for (double d : probability) {
-			System.out.print(MathAux.redondear(d)+" ");	
+			System.out.print(MathAux.redondear(d,2)+" ");	
 		}
 		System.out.print("]");
 		
@@ -45,6 +45,7 @@ public class Location {
 			suma+=probAux[i];
 		}
 		System.out.println();
+		System.out.println("Sensar:");
 		for (int i = 0; i < probAux.length; i++) {
 			probAux[i]=probAux[i]/suma;
 			System.out.print(probAux[i]+" - ");	
@@ -74,8 +75,6 @@ public class Location {
 			return p;
 		double[] probAux = p.clone();
 		int size=probAux.length;
-		double aux=0d;
-		int dif=0;
 		int salto = size-U;
 		double s=0d;
 		for (int i = 0; i < size; i++) {
@@ -87,6 +86,7 @@ public class Location {
 			probAux[i]=s;
 			salto++;
 		}
+		System.out.println("Move:");
 		System.out.print("[ ");
 		for (double d : probAux) {
 			System.out.print(d+" ");	
