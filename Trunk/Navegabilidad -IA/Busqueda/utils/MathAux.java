@@ -115,5 +115,10 @@ public class MathAux {
     {
     	return BigDecimal.valueOf(num).setScale(MathAux.PRECISION_REDONDEO, BigDecimal.ROUND_HALF_EVEN).doubleValue();
     }
+    
+    public static Double redondear(Double num,int precision)
+    {
+    	return BigDecimal.valueOf(num).setScale(precision, BigDecimal.ROUND_HALF_EVEN).doubleValue();
+    }
 
 }
