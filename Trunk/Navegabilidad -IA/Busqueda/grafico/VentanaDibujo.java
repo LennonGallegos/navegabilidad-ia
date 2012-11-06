@@ -205,7 +205,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter(".\\output.txt");
+            fichero = new FileWriter(".\\file.txt");
             pw = new PrintWriter(fichero);
 
             for (int i = 0; i < panelDibujo.lineas.size(); i++) {
@@ -221,9 +221,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
         		pw.println("N("+nodo.getCenterX()+","+nodo.getCenterY()+")");
     		}
             if(panelDibujo.inicio!=null)
-            	pw.println("I("+panelDibujo.inicio.getCenterX()+","+panelDibujo.inicio.getCenterY()+")");
+            	pw.println("I("+panelDibujo.inicio.getX()+","+panelDibujo.inicio.getY()+")");
             if(panelDibujo.fin!=null)
-            	pw.println("F("+panelDibujo.fin.getCenterX()+","+panelDibujo.fin.getCenterY()+")");
+            	pw.println("F("+panelDibujo.fin.getX()+","+panelDibujo.fin.getY()+")");
             
 
         } catch (Exception e) {
