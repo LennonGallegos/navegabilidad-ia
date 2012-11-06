@@ -129,7 +129,7 @@ public class PanelDibujo extends JPanel{
 * @param punto1 Se obtiene el punto inicial de la linea.
 * @param punto2 Se obtiene el punto final de la linea.
 */
-	public void linea(Point2D punto1, Point2D punto2){
+	private void linea(Point2D punto1, Point2D punto2){
 		Linea = new Line2D.Double(punto1,punto2);
 	}
 
@@ -350,8 +350,6 @@ public class PanelDibujo extends JPanel{
 	{
 		Point2D punto1 = new Point2D.Double(xInicial,yInicial);
 		radio=MathAux.RADIO_NODO_INICIO;
-		//Point2D punto2 = new Point2D.Double(punto1.getX()+radio,punto1.getY()+radio);
-		//radio = Math.sqrt(Math.pow(punto2.getX()-punto1.getX(),2)+Math.pow(punto2.getY()-punto1.getY(),2));
 		
 		//Se crea un circulo ingresando el mismo ancho y largo, ademas, al desplazarlo en el radio, se logra
 		//dibujar el circulo desde el centro.
@@ -366,6 +364,26 @@ public class PanelDibujo extends JPanel{
 		radio=MathAux.RADIO_NODO_FIN;
 		fin = new Ellipse2D.Double(punto1.getX()-radio,punto1.getY()-radio,2*radio,2*radio);
 		this.repaint();
+	}
+	
+	//Extremo superior izquierdo del cuadrado que envuelve al elipse
+	public void dibujarFin(Point2D pFin)
+	{
+		radio=MathAux.RADIO_NODO_FIN;
+		fin = new Ellipse2D.Double(pFin.getX(),pFin.getY(),2*radio,2*radio);
+	}
+	//	Extremo superior izquierdo del cuadrado que envuelve al elipse
+	public void dibujarInicio(Point2D pInicio)
+	{
+		radio=MathAux.RADIO_NODO_INICIO;
+		inicio = new Ellipse2D.Double(pInicio.getX(),pInicio.getY(),2*radio,2*radio);
+	}
+	
+	public void addLinea(Point2D pInicio, Point2D pFin)
+	{
+		linea(pInicio, pFin);
+		this.repaint();
+		addLinea();
 	}
 
 	public void redibujarLinea()

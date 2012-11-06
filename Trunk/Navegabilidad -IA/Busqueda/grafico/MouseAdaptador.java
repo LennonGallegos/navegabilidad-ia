@@ -65,6 +65,10 @@ public class MouseAdaptador extends MouseAdapter {
 			PanelDibujo panel = (PanelDibujo) arg0.getSource();
 			if(panel.objetivo==PanelDibujo.LINEA_OBJ)
 			{	
+				//Para no dibujar puntos
+				if(arg0.getX()==panel.xInicial && arg0.getY()==panel.yInicial)
+					return;
+				
 				if(arg0.getX()>0)
 					panel.xFinal=arg0.getX();
 				else
@@ -74,13 +78,16 @@ public class MouseAdaptador extends MouseAdapter {
 				else
 					panel.yFinal=0;
 				
-				if(Math.abs(panel.xFinal-panel.xInicial)<20)
+				//Para alinear las rectas
+				if(Math.abs(panel.xFinal-panel.xInicial)<10)
 					panel.xFinal=panel.xInicial;
-				if(Math.abs(panel.yFinal-panel.yInicial)<20)
+				else
+				if(Math.abs(panel.yFinal-panel.yInicial)<10)
 					panel.yFinal=panel.yInicial;
+				
 				panel.redibujarLinea();
 				panel.addLinea();
-
+				
 			}
 			else if(panel.objetivo==PanelDibujo.UNION_OBJ)
 			{
